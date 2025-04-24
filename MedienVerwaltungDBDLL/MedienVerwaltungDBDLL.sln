@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedienVerwaltungDBDLL", "MedienVerwaltungDBDLL.csproj", "{C5D0EE55-03D9-3C14-2916-239D768036A2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5D0EE55-03D9-3C14-2916-239D768036A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5D0EE55-03D9-3C14-2916-239D768036A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5D0EE55-03D9-3C14-2916-239D768036A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5D0EE55-03D9-3C14-2916-239D768036A2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49B01344-B019-42D4-929D-A8D1F6C52BBE}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,76 @@
+<div class="modal fade" id="songDetailsModal" tabindex="-1"
+aria-labelledby="exampleModalLabel" 
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+				<ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Id:</span>
+                        <label class="form-control">{{selectedSong.id}}</label>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Titel:</span>
+                        <input type="text"
+                        #songTitleIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedSong.title}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Interpret:</span>
+                        <input type="text"
+                        #songInterpretIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedSong.interpretFullName}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Songlänge:</span>
+                        <input type="number"
+                        #songLengthIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedSong.length}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Speicherort:</span>
+                        <input type="text"
+                        #songLocationIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedSong.location}}"
+                        autocomplete="off">
+                    </li>
+                </ul>
+			</div>
+            <div class="modal-footer">
+                <button 
+                type="button" 
+                class="btn btn-danger" 
+                data-bs-dismiss="modal" 
+                (click)="selectedSong.id !== undefined && service.deleteSong(selectedSong.id, currentPage)">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" 
+                class="btn btn-primary" 
+                data-bs-dismiss="modal" 
+                (click)="saveSong(selectedSong.id, songTitleIF.value, songInterpretIF.value, songLengthIF.valueAsNumber, songLocationIF.value)">
+                    Änderungen Speichern
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

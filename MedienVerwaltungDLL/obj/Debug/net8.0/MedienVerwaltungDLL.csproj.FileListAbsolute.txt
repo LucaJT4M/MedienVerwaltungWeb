@@ -1,0 +1,13 @@
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\MedienVerwaltungDLL\obj\Debug\net8.0\MedienVerwaltungDLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\MedienVerwaltungDLL\obj\Debug\net8.0\MedienVerwaltungDLL.AssemblyInfoInputs.cache
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\MedienVerwaltungDLL\obj\Debug\net8.0\MedienVerwaltungDLL.AssemblyInfo.cs
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\MedienVerwaltungDLL\obj\Debug\net8.0\MedienVerwaltungDLL.csproj.CoreCompileInputs.cache
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\MedienVerwaltungDLL\bin\Debug\net8.0\MedienVerwaltungDLL.deps.json
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\MedienVerwaltungDLL\bin\Debug\net8.0\MedienVerwaltungDLL.dll
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\MedienVerwaltungDLL\bin\Debug\net8.0\MedienVerwaltungDLL.pdb
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\MedienVerwaltungDLL\obj\Debug\net8.0\MedienVerwaltungDLL.dll
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\MedienVerwaltungDLL\obj\Debug\net8.0\refint\MedienVerwaltungDLL.dll
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\MedienVerwaltungDLL\obj\Debug\net8.0\MedienVerwaltungDLL.pdb
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\MedienVerwaltungDLL\obj\Debug\net8.0\ref\MedienVerwaltungDLL.dll
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\MedienVerwaltungDLL\obj\Debug\net8.0\MedienVerwaltungDLL.csproj.AssemblyReference.cache
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\MedienVerwaltungDLL\obj\Debug\net8.0\MedienVerwaltungDLL.sourcelink.json

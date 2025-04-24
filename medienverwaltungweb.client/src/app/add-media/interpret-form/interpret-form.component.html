@@ -1,0 +1,73 @@
+<li class="list-group-item">
+    <span>Interpret:</span>
+</li>
+<li class="list-group-item input-group d-flex">
+    <span class="input-group-text overflow-hidden"
+    style="width: 50%;">
+        Vorhandene Interpreten:
+    </span>
+    <select class="form-select" 
+    id="floatingSelect" 
+    aria-label="Floating label select example"
+    name="gender"
+    [ngModel]="selectedIntepret"
+    (change)="selectExistingInterpret($event)">
+        <option [value]="0" selected></option>
+        <option *ngFor="let interpret of service.interpretList"
+        [value]="interpret.id">
+            {{interpret.fullName}}
+        </option>
+    </select>
+</li>
+<li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+    <span class="input-group-text" id="addon-wrapping" style="width: 50%;">
+        Vorname:
+    </span>
+    <input type="text"
+    class="form-control" 
+    aria-describedby="addon-wrapping"
+    autocomplete="off"
+    [value]="selectedIntepret.firstName"
+    (change)="inputFieldChanged($event, 'FN')">
+</li>
+<li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+    <span class="input-group-text" id="addon-wrapping" style="width: 50%;">
+        Nachname:
+    </span>
+    <input type="text"
+    class="form-control" 
+    aria-describedby="addon-wrapping"
+    autocomplete="off"
+    [value]="selectedIntepret.name"
+    (change)="inputFieldChanged($event, 'LN')">
+</li>
+<li class="list-group-item input-group d-flex">
+    <span class="input-group-text"
+    style="width: 50%;">
+        Geschlecht:
+    </span>
+    <select class="form-select" 
+    id="floatingSelect" 
+    aria-label="Floating label select example"
+    name="gender"
+    [value]="selectedIntepret.gender"
+    (change)="inputFieldChanged($event, 'G')">
+        <option selected>Bitte wählen</option>
+        <option>Frau</option>
+        <option>Mann</option>
+        <option>Divers</option>
+    </select>
+</li>
+<li class="list-group-item input-group d-flex">
+    <span class="input-group-text"
+    style="width: 50%;">
+        Geburtsdatum:
+    </span>
+    <input type="text"
+    name="datepicker_input" 
+    class="datepicker_input form-control" 
+    placeholder="DD/MM/YYYY" 
+    autocomplete="off"
+    [value]="selectedIntepret.birthDate | date:'dd/MM/yyyy'"
+    (change)="inputFieldChanged($event, 'BD')">
+</li>

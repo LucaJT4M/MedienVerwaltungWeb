@@ -1,0 +1,21 @@
+<li class="list-group-item d-flex justify-content-end align-items-center input-group flex-nowrap">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Schauspieler
+        </button>
+        <ul class="dropdown-menu">
+            <li *ngFor="let actor of actorList">
+                <div class="form-check m-1">
+                    <input class="form-check-input" 
+                    type="checkbox" 
+                    id="checkDefault"
+                    [checked]="actorIsSelected(actor)"
+                    (change)="toggleActorSelection(actor)">
+                    <label class="form-check-label" for="checkDefault">
+                        {{actor.fullName}}
+                    </label>
+                </div>
+            </li>
+        </ul>
+    </div>
+</li>

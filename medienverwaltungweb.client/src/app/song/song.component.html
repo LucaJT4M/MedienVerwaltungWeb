@@ -1,0 +1,52 @@
+<div class="card">
+    <div class="card-body">
+        <p>Songs:</p>
+        <div class="list-group">
+            <button *ngFor="let song of service.songList"
+                    type="button"
+                    class="list-group-item list-group-item-action"
+                    data-bs-toggle="modal"
+                    data-bs-target="#songDetailsModal"
+										(click)="selectSong(song)">
+                <strong>Id:</strong> {{song.id}}
+                <strong>Titel:</strong> {{song.title}}
+                <strong>Speicherort:</strong> {{song.location}}
+            </button>
+        </div>
+    </div>
+</div>
+<br>
+<nav class="d-flex justify-content-center ">
+    <ul class="pagination">
+        <li class="page-item">
+            <button class="page-link" (click)="navToPage(1)"
+            [ngClass]="{'disabled' : !canNavPrevious}">1</button>
+        </li>
+        <li class="page-item">
+            <button class="page-link" (click)="navToPreviousPage()"
+            [ngClass]="{'disabled' : !canNavPrevious}"><</button>
+        </li>
+        <li class="page-item">
+            <button class="page-link" (click)="navToPage(currentPage-1)"
+            [ngClass]="{'disabled': !canNavPrevious}">{{currentPage-1}}</button>
+        </li>
+        <li class="page-item active" aria-current="page">
+            <span class="page-link">{{currentPage}}</span>
+        </li>
+        <li class="page-item">
+            <button class="page-link" (click)="navToPage(currentPage+1)"
+            [ngClass]="{'disabled': !canNavNext}">{{currentPage+1}}</button>
+        </li>
+        <li class="page-item">
+            <button class="page-link" (click)="navToNextPage()"
+            [ngClass]="{'disabled' : !canNavNext}">></button>
+        </li>
+        <li class="page-item">
+            <button class="page-link" (click)="navToPage(maxPages)"
+            [ngClass]="{'disabled' : !canNavNext}">{{maxPages}}</button>
+        </li>
+    </ul>
+</nav>
+<app-song-details-pop-up [selectedSong]="selectedSong" 
+[currentPage]="currentPage"
+aria-hidden="true"></app-song-details-pop-up>

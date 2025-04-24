@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "dgSpecHash": "n1nDAi2Zrik=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\DarrylParker\\Documents\\Codes\\Web\\medienVerwaltungWeb\\MedienVerwaltungDLL\\MedienVerwaltungDLL.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\entityframeworkcore.projectables\\4.0.0\\entityframeworkcore.projectables.4.0.0.nupkg.sha512",
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\entityframeworkcore.projectables.abstractions\\4.0.0\\entityframeworkcore.projectables.abstractions.4.0.0.nupkg.sha512",
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.0\\microsoft.entityframeworkcore.8.0.0.nupkg.sha512",
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.0\\microsoft.entityframeworkcore.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.0\\microsoft.entityframeworkcore.analyzers.8.0.0.nupkg.sha512",
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\9.0.3\\microsoft.extensions.caching.abstractions.9.0.3.nupkg.sha512",
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\microsoft.extensions.caching.memory\\9.0.3\\microsoft.extensions.caching.memory.9.0.3.nupkg.sha512",
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.3\\microsoft.extensions.dependencyinjection.abstractions.9.0.3.nupkg.sha512",
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\microsoft.extensions.logging\\8.0.0\\microsoft.extensions.logging.8.0.0.nupkg.sha512",
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.3\\microsoft.extensions.logging.abstractions.9.0.3.nupkg.sha512",
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\microsoft.extensions.options\\9.0.3\\microsoft.extensions.options.9.0.3.nupkg.sha512",
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\microsoft.extensions.primitives\\9.0.3\\microsoft.extensions.primitives.9.0.3.nupkg.sha512",
+    "C:\\Users\\DarrylParker\\.nuget\\packages\\system.diagnostics.diagnosticsource\\9.0.3\\system.diagnostics.diagnosticsource.9.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

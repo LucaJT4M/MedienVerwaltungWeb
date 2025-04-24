@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("medienVerwaltungWeb.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b40ea0bf37f2288502f04c0f27286fcc293843b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e1e20ed541b5f02d61308c1037cb2c254e1c2e88")]
 [assembly: System.Reflection.AssemblyProductAttribute("medienVerwaltungWeb.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("medienVerwaltungWeb.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -12,7 +12,9 @@ export class SongService {
   maxPages: number = 1;
   pageSize: number = 10;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.getSongPageCount()
+  }
 
   getSongPage(page: number) {
     this.http

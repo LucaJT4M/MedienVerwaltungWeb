@@ -288,3 +288,4 @@ C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\medienVerwaltungWe
 C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\medienVerwaltungWeb.Server\obj\Debug\net8.0\medienVerwaltungWeb.Server.sourcelink.json
 C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\medienVerwaltungWeb.Server\bin\Debug\net8.0\MedienVerwaltungDBDLL.dll
 C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\medienVerwaltungWeb.Server\bin\Debug\net8.0\MedienVerwaltungDBDLL.pdb
+C:\Users\DarrylParker\Documents\Codes\Web\medienVerwaltungWeb\medienVerwaltungWeb.Server\bin\Debug\net8.0\appsettings.json

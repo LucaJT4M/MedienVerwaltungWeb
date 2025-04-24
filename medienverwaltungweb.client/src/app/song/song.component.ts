@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SongDTO } from '../api-client';
 import { CommonModule } from '@angular/common';
 import { SongDetailsPopUpComponent } from '../song-details-pop-up/song-details-pop-up.component';
-import { MedienVerwaltungWebService } from '../shared/medien-verwaltung-web.service';
 import { SongService } from '../shared/song.service';
 
 @Component({
@@ -47,34 +46,35 @@ export class SongComponent {
 
     if (this.currentPage < this.maxPages) {
       this.currentPage++;
-      this.updatePageNums();
     } else {
       console.log('Not navigating: ' + this.maxPages + ' ' + this.currentPage);
     }
+    this.updatePageNums();
   }
 
   navToPreviousPage() {
     if (this.currentPage != 1) {
       this.currentPage--;
-      this.updatePageNums();
     }
+    this.updatePageNums();
   }
 
   navToPage(pageNum: number) {
-    if (pageNum >= 1) {
+    if (pageNum >= 1 || pageNum != this.maxPages) {
       this.currentPage = pageNum;
-      this.updatePageNums();
     }
+    this.updatePageNums();
   }
 
   updatePageNums() {
     if (this.currentPage == 1) {
       this.canNavPrevious = false;
+      this.canNavNext = true;
     } else {
       this.canNavPrevious = true;
     }
 
-    if (this.currentPage == this.maxPages) {
+    if (this.currentPage >= this.maxPages) {
       this.canNavNext = false;
     } else {
       this.canNavNext = true;

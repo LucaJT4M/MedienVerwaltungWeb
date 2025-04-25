@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { booleanAttribute, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { SongDTO } from '../api-client';
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +11,7 @@ export class SongService {
   songList: SongDTO[] = [];
   maxPages: number = 1;
   pageSize: number = 10;
+  isLastPage: boolean = false
 
   constructor(private http: HttpClient) {
     this.getSongPageCount()
@@ -84,5 +85,16 @@ export class SongService {
         console.log(err);
       },
     });
+  }
+
+  isPageLastPage(page: number) {
+    this.http.get(this.url + `/Song/IsPageLastPage/${page},${this.pageSize}`).subscribe({
+      next: (res) => {
+        this.isLastPage = res as boolean
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 }

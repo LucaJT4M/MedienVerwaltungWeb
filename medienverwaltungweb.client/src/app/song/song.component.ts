@@ -16,6 +16,8 @@ export class SongComponent {
   currentPage: number = 1;
   canNavPrevious: boolean = false;
   canNavNext: boolean = false;
+  canNavLastPage: boolean = false;
+  canNavLastPageCount: number = 0; // Stellt einfach nur sicher dass canNavLastPage erst nach dem zweiten updatePageNums aktiviert wird
   maxPages: number = 0;
 
   constructor(public service: SongService) {
@@ -60,9 +62,10 @@ export class SongComponent {
   }
 
   navToPage(pageNum: number) {
-    if (pageNum >= 1 || pageNum != this.maxPages) {
+    this.service.isPageLastPage(pageNum -1)
+    if (pageNum >= 1 && !this.service.isLastPage) {
       this.currentPage = pageNum;
-    }
+    } 
     this.updatePageNums();
   }
 
@@ -74,11 +77,19 @@ export class SongComponent {
       this.canNavPrevious = true;
     }
 
-    if (this.currentPage >= this.maxPages) {
+    if (this.currentPage == this.maxPages) {
       this.canNavNext = false;
     } else {
       this.canNavNext = true;
     }
+
+    if (this.maxPages == 1) {
+      this.canNavNext = false;
+    } else {
+      this.canNavNext = true;
+      this.canNavLastPageCount++;
+    }
+
     this.service.getSongPage(this.currentPage);
     this.songs = this.service.songList;
     this.service.getSongPageCount();

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { SongDTO } from '../api-client';
 import { CommonModule } from '@angular/common';
 import { SongDetailsPopUpComponent } from '../song-details-pop-up/song-details-pop-up.component';
-import { SongService } from '../shared/song.service';
+import { SongService } from '../shared/song.service'; 
 
 @Component({
   selector: 'app-song',
@@ -16,27 +16,11 @@ export class SongComponent {
   currentPage: number = 1;
   canNavPrevious: boolean = false;
   canNavNext: boolean = false;
-  canNavLastPage: boolean = false;
-  canNavLastPageCount: number = 0; // Stellt einfach nur sicher dass canNavLastPage erst nach dem zweiten updatePageNums aktiviert wird
+  timesNavigated: number = 0;
   maxPages: number = 0;
 
   constructor(public service: SongService) {
     this.updatePageNums();
-    this.maxPages = service.maxPages;
-  }
-
-  seedSongs() {
-    for (let index = 4; index < 20; index++) {
-      var newSong: SongDTO = {
-        id: index,
-        title: 'Song ' + index,
-        interpretFullName: 'Max Mustermann',
-        length: index,
-        location: 'Location ' + index,
-      };
-
-      this.songs.push(newSong);
-    }
   }
 
   selectSong(_selectedSong: SongDTO) {
@@ -44,12 +28,11 @@ export class SongComponent {
   }
 
   navToNextPage() {
-    this.maxPages = this.service.maxPages;
-
-    if (this.currentPage < this.maxPages) {
+    if (this.currentPage < this.service.maxPages) {
       this.currentPage++;
+      this.timesNavigated++;
     } else {
-      console.log('Not navigating: ' + this.maxPages + ' ' + this.currentPage);
+      console.log('Not navigating: ' + this.service.maxPages + ' ' + this.currentPage);
     }
     this.updatePageNums();
   }
@@ -57,6 +40,7 @@ export class SongComponent {
   navToPreviousPage() {
     if (this.currentPage != 1) {
       this.currentPage--;
+      this.timesNavigated++;
     }
     this.updatePageNums();
   }
@@ -65,34 +49,40 @@ export class SongComponent {
     this.service.isPageLastPage(pageNum -1)
     if (pageNum >= 1 && !this.service.isLastPage) {
       this.currentPage = pageNum;
+      this.timesNavigated++;
     } 
     this.updatePageNums();
   }
 
   updatePageNums() {
-    if (this.currentPage == 1) {
-      this.canNavPrevious = false;
-      this.canNavNext = true;
+    this.service.getSongPageCount().subscribe({
+      next: (res) => {
+        this.maxPages = res as number;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+
+    this.service.getSongPage(this.currentPage).subscribe({
+      next: (res) => {
+        this.songs = res
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+
+    if (this.maxPages > 1 && this.currentPage != this.maxPages + 1) {
+        this.canNavNext = true;
     } else {
-      this.canNavPrevious = true;
+        this.canNavNext = false;
     }
 
-    if (this.currentPage == this.maxPages) {
-      this.canNavNext = false;
+    if (this.currentPage != 1) {
+        this.canNavPrevious = true;
     } else {
-      this.canNavNext = true;
+        this.canNavPrevious = false;
     }
-
-    if (this.maxPages == 1) {
-      this.canNavNext = false;
-    } else {
-      this.canNavNext = true;
-      this.canNavLastPageCount++;
-    }
-
-    this.service.getSongPage(this.currentPage);
-    this.songs = this.service.songList;
-    this.service.getSongPageCount();
-    this.maxPages = this.service.maxPages;
   }
 }

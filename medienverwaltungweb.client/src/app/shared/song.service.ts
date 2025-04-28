@@ -1,7 +1,8 @@
-import { booleanAttribute, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { SongDTO } from '../api-client';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,28 +18,12 @@ export class SongService {
     this.getSongPageCount()
   }
 
-  getSongPage(page: number) {
-    this.http
-      .get(this.url + `/Song/SongPagination/${page},${this.pageSize}`)
-      .subscribe({
-        next: (res) => {
-          this.songList = res as SongDTO[];
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+  getSongPage(page: number): Observable<SongDTO[]> {
+    return this.http.get<SongDTO[]>(this.url + `/Song/SongPagination/${page},${this.pageSize}`)
   }
 
-  getSongPageCount() {
-    this.http.get(this.url + `/Song/GetPageCount/${this.pageSize}`).subscribe({
-      next: (res) => {
-        this.maxPages = res as number;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+  getSongPageCount(): Observable<number> {
+    return this.http.get<number>(this.url + `/Song/GetPageCount/${this.pageSize}`)
   }
 
   searchSongByTitle(searchTerm: string) {

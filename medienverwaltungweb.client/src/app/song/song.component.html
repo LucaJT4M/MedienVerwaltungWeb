@@ -2,7 +2,7 @@
     <div class="card-body">
         <p>Songs:</p>
         <div class="list-group">
-            <button *ngFor="let song of service.songList"
+            <button *ngFor="let song of songs"
                     type="button"
                     class="list-group-item list-group-item-action"
                     data-bs-toggle="modal"
@@ -42,8 +42,8 @@
             [ngClass]="{'disabled' : !canNavNext}">></button>
         </li>
         <li class="page-item">
-            <button class="page-link" (click)="navToPage(maxPages)"
-            [ngClass]="{'disabled' : !canNavNext }">{{maxPages}}</button>
+            <button class="page-link" (click)="navToPage(service.maxPages)"
+            [ngClass]="{'disabled' : !canNavNext }">{{service.maxPages+1}}</button>
         </li>
     </ul>
 </nav>

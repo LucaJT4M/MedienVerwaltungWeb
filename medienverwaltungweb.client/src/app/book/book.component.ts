@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MedienVerwaltungWebService } from '../shared/medien-verwaltung-web.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SongDTO } from '../api-client';
 
 @Component({
   selector: 'app-book',
@@ -9,14 +9,20 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   standalone: false,
 })
 export class BookComponent {
-  constructor(public service: MedienVerwaltungWebService) {}
+  songList: SongDTO[] = []
 
-  form = new FormGroup({
-    name: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
-  });
-
-  onSubmit() {
-    console.log(this.form.value);
+  constructor(public service: MedienVerwaltungWebService) {
+    this.getSongs()
+  }
+   
+  getSongs() {
+    this.service.getSongs().subscribe({
+      next: (res) => {
+        this.songList = res
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 }

@@ -42,8 +42,8 @@
             [ngClass]="{'disabled' : !canNavNext}">></button>
         </li>
         <li class="page-item">
-            <button class="page-link" (click)="navToPage(service.maxPages)"
-            [ngClass]="{'disabled' : !canNavNext }">{{service.maxPages+1}}</button>
+            <button class="page-link" (click)="navToPage(maxPages+1)"
+            [ngClass]="{'disabled' : !canNavNext }">{{maxPages+1}}</button>
         </li>
     </ul>
 </nav>

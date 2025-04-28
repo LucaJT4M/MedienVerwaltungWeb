@@ -20,7 +20,7 @@ export class SongComponent {
   maxPages: number = 0;
 
   constructor(public service: SongService) {
-    this.updatePageNums();
+    this.getDataForSongs()
   }
 
   selectSong(_selectedSong: SongDTO) {
@@ -33,28 +33,10 @@ export class SongComponent {
       this.currentPage = pageNum;
       this.timesNavigated++;
     } 
-    this.updatePageNums();
+    this.getDataForSongs();
   }
 
   updatePageNums() {
-    this.service.getSongPageCount().subscribe({
-      next: (res) => {
-        this.maxPages = res as number;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-
-    this.service.getSongPage(this.currentPage).subscribe({
-      next: (res) => {
-        this.songs = res
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-
     if (this.maxPages > 1 && this.currentPage != this.maxPages + 1) {
         this.canNavNext = true;
     } else {
@@ -66,5 +48,25 @@ export class SongComponent {
     } else {
         this.canNavPrevious = false;
     }
+  }
+
+  getDataForSongs() {
+    this.service.getSongPageCount().subscribe({
+      next: (res) => {
+        this.maxPages = res;
+        this.service.getSongPage(this.currentPage).subscribe({
+          next: (res) => {
+            this.songs = res
+            this.updatePageNums()
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

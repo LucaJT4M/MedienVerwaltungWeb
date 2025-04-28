@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { Actor, MovieDTO } from '../api-client';
+import { Actor, MovieDTO, SongDTO } from '../api-client';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,14 +16,20 @@ export class MedienVerwaltungWebService {
     this.getActors();
   }
 
-  getActors() {
-    this.http.get(this.url + '/Actor').subscribe({
-      next: (res) => {
-        this.actorList = res as Actor[];
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+  getActors(): Observable<Actor[]> {
+    return this.http.get<Actor[]>(this.url + '/Actor')
+  }
+
+  getSongs(): Observable<SongDTO[]> {
+    return this.http.get<SongDTO[]>(this.url + "/Song")
   }
 }
+
+// .subscribe({
+//       next: (res) => {
+//         this.actorList = res as Actor[];
+//       },
+//       error: (err) => {
+//         console.log(err);
+//       },
+//     });

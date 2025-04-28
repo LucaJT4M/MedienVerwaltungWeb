@@ -27,24 +27,6 @@ export class SongComponent {
     this.selectedSong = _selectedSong;
   }
 
-  navToNextPage() {
-    if (this.currentPage < this.service.maxPages) {
-      this.currentPage++;
-      this.timesNavigated++;
-    } else {
-      console.log('Not navigating: ' + this.service.maxPages + ' ' + this.currentPage);
-    }
-    this.updatePageNums();
-  }
-
-  navToPreviousPage() {
-    if (this.currentPage != 1) {
-      this.currentPage--;
-      this.timesNavigated++;
-    }
-    this.updatePageNums();
-  }
-
   navToPage(pageNum: number) {
     this.service.isPageLastPage(pageNum -1)
     if (pageNum >= 1 && !this.service.isLastPage) {

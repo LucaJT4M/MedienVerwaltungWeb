@@ -101,10 +101,8 @@ namespace MedienVerwaltungDBDLL
                     var toRemoveSong = entity as Song ?? throw new Exception("Entity is not a Song");
                     Songs.Remove(toRemoveSong);
                     var toRemoveItem = _context.Items.AsNoTracking().FirstOrDefault(i => i.MediaId == toRemoveSong.Id);
-                    if (toRemoveItem != null)
-                    {
-                        Items.Remove(toRemoveItem);
-                    }
+
+                    Items.Remove(toRemoveItem);
 
                     break;
 

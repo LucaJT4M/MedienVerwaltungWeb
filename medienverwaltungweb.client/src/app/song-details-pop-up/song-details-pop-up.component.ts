@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, } from '@angular/core';
 import { SongDTO } from '../api-client';
 import { SongService } from '../shared/song.service';
+import { SongComponent } from '../song/song.component';
 
 @Component({
   selector: 'app-song-details-pop-up',
@@ -13,7 +14,7 @@ export class SongDetailsPopUpComponent {
   @Input() currentPage: number = 1;
   songTitleIF: string = '';
 
-  constructor(public service: SongService) {}
+  constructor(public service: SongService, private songComp: SongComponent) {}
 
   saveSong(
     toUpdateSongId: number | undefined,
@@ -31,5 +32,17 @@ export class SongDetailsPopUpComponent {
     };
 
     this.service.saveSong(toUpdateSong, this.currentPage);
+  }
+
+  deleteSong(songId: number, currentPage: number) {
+    this.service.deleteSong(songId).subscribe({
+      next: (res) => {
+        this.service.getSongPage(currentPage);
+        this.songComp.getDataForSongs(currentPage)
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

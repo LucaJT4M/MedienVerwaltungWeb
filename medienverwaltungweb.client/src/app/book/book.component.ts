@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MedienVerwaltungWebService } from '../shared/medien-verwaltung-web.service';
-import { SongDTO } from '../api-client';
 
 @Component({
   selector: 'app-book',
@@ -9,20 +8,17 @@ import { SongDTO } from '../api-client';
   standalone: false,
 })
 export class BookComponent {
-  songList: SongDTO[] = []
+  txtValue: string = "";
+  message : string = "";
 
-  constructor(public service: MedienVerwaltungWebService) {
-    this.getSongs()
-  }
-   
-  getSongs() {
-    this.service.getSongs().subscribe({
-      next: (res) => {
-        this.songList = res
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
+  constructor(public service: MedienVerwaltungWebService) {}
+
+  onTextChange(value: any)
+  {
+    this.txtValue = value;
+    if(this.txtValue == '')
+    {
+      this.message="Textbox is empty !!!";
+    }
   }
 }

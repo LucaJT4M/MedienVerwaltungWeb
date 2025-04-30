@@ -1,2 +1,6 @@
 <p>Book works</p>
-<h1>Songs: {{songList.length}}</h1>
+<input type="text"  [(ngModel)]="txtValue" (ngModelChange)="onTextChange($event)" />
+<br>
+{{txtValue}}
+<br>
+{{message}}

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MedienVerwaltungDBDLL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f791ba014a2497cac6421d09f5d439af2d9d755b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8862942ab7f57961a2e7f68343ce0bd821948bac")]
 [assembly: System.Reflection.AssemblyProductAttribute("MedienVerwaltungDBDLL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MedienVerwaltungDBDLL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

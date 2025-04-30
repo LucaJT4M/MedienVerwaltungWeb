@@ -7,7 +7,6 @@ import {
   MusicAlbumDTO,
   SongDTO,
 } from '../api-client';
-import { MedienVerwaltungWebService } from './medien-verwaltung-web.service';
 import { SongService } from './song.service';
 
 @Injectable({
@@ -27,15 +26,22 @@ export class AddMediaService {
       this.newSong.title !== undefined &&
       this.newSong.location !== undefined &&
       this.newSong.length !== undefined &&
-      this.newSong.interpretFullName !== undefined &&
-      this.newSong.title !== '' &&
-      this.newSong.location !== '' &&
-      this.newSong.length > 0 &&
-      this.newSong.interpretFullName !== ''
+      this.newInterpret.birthDate !== "" &&
+      this.newInterpret.firstName !== "" &&
+      this.newInterpret.name !== "" &&
+      this.newInterpret.gender !== ""
     );
   }
 
   addSong() {
-    this.songService.addSong(this.newSong);
+    this.songService.addSong(this.newSong).subscribe({
+      next: (res) => {
+        window.location.reload();
+        console.log(res)
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });;
   }
 }

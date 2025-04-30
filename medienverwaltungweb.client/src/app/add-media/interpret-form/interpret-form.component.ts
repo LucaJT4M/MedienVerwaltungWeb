@@ -1,10 +1,11 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { Datepicker } from 'vanillajs-datepicker';
 import { CommonModule } from '@angular/common';
 import { Interpret } from '../../api-client';
 import { FormsModule } from '@angular/forms';
 import { InterpretService } from '../../shared/interpretService.service';
 import { AddMediaService } from '../../shared/addMedia.service';
+import { AddMediaComponent } from '../add-media.component';
 
 @Component({
   selector: 'app-interpret-form',
@@ -13,6 +14,8 @@ import { AddMediaService } from '../../shared/addMedia.service';
   imports: [CommonModule, FormsModule],
 })
 export class InterpretFormComponent implements AfterViewInit {
+  @Input() interpretFullName: string | null | undefined = ""
+
   selectedIntepret: Interpret = {
     name: '',
     firstName: '',
@@ -28,7 +31,8 @@ export class InterpretFormComponent implements AfterViewInit {
 
   constructor(
     public service: InterpretService,
-    private addService: AddMediaService
+    private addService: AddMediaService,
+    private addMedia: AddMediaComponent
   ) {
     service.getInterprets();
   }
@@ -79,6 +83,11 @@ export class InterpretFormComponent implements AfterViewInit {
       this.selectedIntepret.gender = inputFieldValue;
     }
 
+    this.selectedIntepret.fullName = `${this.selectedIntepret.firstName} ${this.selectedIntepret.name}`
+
     this.addService.newInterpret = this.selectedIntepret;
+    this.addMedia.songAddForm.patchValue({
+      interpretFullName: this.selectedIntepret.fullName
+    })
   }
 }

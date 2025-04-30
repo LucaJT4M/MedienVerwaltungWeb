@@ -20,7 +20,7 @@ export class SongComponent {
   maxPages: number = 0;
 
   constructor(public service: SongService) {
-    this.getDataForSongs()
+    this.getDataForSongs(this.currentPage)
   }
 
   selectSong(_selectedSong: SongDTO) {
@@ -28,12 +28,15 @@ export class SongComponent {
   }
 
   navToPage(pageNum: number) {
-    this.service.isPageLastPage(pageNum -1)
+    this.service.isPageLastPage(pageNum-1)
     if (pageNum >= 1 && !this.service.isLastPage) {
       this.currentPage = pageNum;
       this.timesNavigated++;
-    } 
-    this.getDataForSongs();
+    } else {
+      console.log("not navigating")
+    }
+    console.log(pageNum)
+    this.getDataForSongs(this.currentPage);
   }
 
   updatePageNums() {
@@ -50,11 +53,11 @@ export class SongComponent {
     }
   }
 
-  getDataForSongs() {
+  getDataForSongs(pageNum: number) {
     this.service.getSongPageCount().subscribe({
       next: (res) => {
         this.maxPages = res;
-        this.service.getSongPage(this.currentPage).subscribe({
+        this.service.getSongPage(pageNum).subscribe({
           next: (res) => {
             this.songs = res
             this.updatePageNums()

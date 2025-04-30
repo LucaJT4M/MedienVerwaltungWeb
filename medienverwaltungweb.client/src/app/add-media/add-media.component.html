@@ -36,7 +36,7 @@
                 <app-song-add-form *ngIf="songAddFormIsShown"/>
                 <app-movie-add-form *ngIf="movieAddFormIsShown"/>
                 <app-musicAlbum-add-form *ngIf="musicAlbumAddFormIsShown"/>
-                <app-interpret-form *ngIf="interpretAddFormIsShown"/>
+                <app-interpret-form [interpretFullName]="addForm.interpretFullName" *ngIf="interpretAddFormIsShown"/>
             </ul>
             <div class="d-flex justify-content-end">
                 <button type="submit"

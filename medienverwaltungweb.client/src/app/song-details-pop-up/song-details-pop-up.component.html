@@ -60,7 +60,7 @@ aria-labelledby="exampleModalLabel"
                 type="button" 
                 class="btn btn-danger" 
                 data-bs-dismiss="modal" 
-                (click)="selectedSong.id !== undefined && service.deleteSong(selectedSong.id, currentPage)">
+                (click)="selectedSong.id !== undefined && deleteSong(selectedSong.id, currentPage)">
                     <i class="fa-solid fa-trash"></i>
                 </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

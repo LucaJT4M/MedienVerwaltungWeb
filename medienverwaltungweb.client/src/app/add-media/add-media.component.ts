@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MediaType } from '../api-client/model/media';
-import { SongDTO } from '../api-client';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AddMediaService } from '../shared/addMedia.service';
 
@@ -30,13 +29,13 @@ export class AddMediaComponent {
     },
   ];
   newMediaType: MediaType = {};
-  testSong: SongDTO = {
-    id: 1,
-    interpretFullName: 'Keine Ahnung',
-    length: 5,
-    location: 'Kein Ahnung Location',
-    title: 'TestSongTitel',
-  };
+  // testSong: SongDTO = {
+  //   id: 1,
+  //   interpretFullName: 'Keine Ahnung',
+  //   length: 5,
+  //   location: 'Kein Ahnung Location',
+  //   title: 'TestSongTitel',
+  // };
   mediaTypeOutput: string | any = '';
   songAddFormIsShown: boolean = false;
   movieAddFormIsShown: boolean = false;
@@ -44,12 +43,21 @@ export class AddMediaComponent {
   musicAlbumAddFormIsShown: boolean = false;
   interpretAddFormIsShown: boolean = false;
 
-  addForm = new FormGroup({
+  addForm: FormGroup | any = new FormGroup({
+    title: new FormControl("", Validators.required),
+    location: new FormControl("", Validators.required)
+  })
+
+  songAddForm = new FormGroup({
     title: new FormControl('', Validators.required),
     location: new FormControl('', Validators.required),
-  });
+    songLength: new FormControl(1, Validators.required),
+    interpretFullName: new FormControl("", Validators.required)
+  })
 
-  constructor(public addService: AddMediaService) {}
+  _addForm: FormGroup | any
+
+  constructor(public addService: AddMediaService) { }
 
   changedMediaType(event: Event) {
     const type = (event.target as HTMLInputElement).value;
@@ -58,6 +66,9 @@ export class AddMediaComponent {
   }
 
   handleSubmit() {
+    this._addForm = this.addForm
+    // this.addForm.reset();
+
     if (this.mediaTypeOutput === '0') {
       // Song ist ausgewählt
       this.addService.newSong.title = this.addForm.value.title;
@@ -67,18 +78,16 @@ export class AddMediaComponent {
 
       if (this.addService.isSongComplete()) {
         this.addService.addSong();
-        window.location.reload();
+      } else {
+        console.log("Form incomplete")
       }
-    } else if (this.mediaTypeOutput === '1') {
-      // Buch ist ausgewählt
-      this.addService.newBook.title = this.addForm.value.title;
-      this.addService.newBook.location = this.addForm.value.location;
     }
   }
 
   updateView(mediaTypeId: string) {
     if (mediaTypeId === '0') {
       // Song ist ausgewählt
+      this.addForm = this.songAddForm
       this.songAddFormIsShown = true;
       this.bookAddFormIsShown = false;
       this.musicAlbumAddFormIsShown = false;

@@ -39,15 +39,8 @@ export class SongService {
       });
   }
 
-  deleteSong(songId: number, currentPage: number) {
-    this.http.delete(this.url + `/Song/${songId}`).subscribe({
-      next: (res) => {
-        this.getSongPage(currentPage);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+  deleteSong(songId: number) {
+    return this.http.delete(this.url + `/Song/${songId}`)
   }
 
   saveSong(toUpdateSong: SongDTO, currentPage: number) {
@@ -64,12 +57,7 @@ export class SongService {
   }
 
   addSong(toAddSong: SongDTO) {
-    this.http.post(this.url + `/Song`, toAddSong).subscribe({
-      next: (res) => {},
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    return this.http.post(this.url + `/Song`, toAddSong)
   }
 
   isPageLastPage(page: number) {

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MediaType } from '../api-client/model/media';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AddMediaService } from '../shared/addMedia.service';
+import { ToasterService } from '../shared/toaster.service';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-add-media',
@@ -55,9 +57,12 @@ export class AddMediaComponent {
     interpretFullName: new FormControl("", Validators.required)
   })
 
-  _addForm: FormGroup | any
+  _addForm: FormGroup = new FormGroup({
+    title: new FormControl(""),
+    location: new FormControl("")
+  })
 
-  constructor(public addService: AddMediaService) { }
+  constructor(public addService: AddMediaService, private toastServ: ToasterService) { }
 
   changedMediaType(event: Event) {
     const type = (event.target as HTMLInputElement).value;
@@ -66,20 +71,22 @@ export class AddMediaComponent {
   }
 
   handleSubmit() {
-    this._addForm = this.addForm
-    // this.addForm.reset();
-
     if (this.mediaTypeOutput === '0') {
       // Song ist ausgewählt
       this.addService.newSong.title = this.addForm.value.title;
       this.addService.newSong.location = this.addForm.value.location;
       this.addService.newSong.interpretFullName =
         this.addService.newInterpret.fullName;
+      
+      this.addForm = this.songAddForm
+      this.addForm.reset()
 
       if (this.addService.isSongComplete()) {
         this.addService.addSong();
       } else {
         console.log("Form incomplete")
+        this.toastServ.error("Bitte alle Felder beim Interpreten ausfüllen!", "Song wurde nicht hinzugefügt!")
+        this.oDelay(4000);
       }
     }
   }
@@ -88,6 +95,7 @@ export class AddMediaComponent {
     if (mediaTypeId === '0') {
       // Song ist ausgewählt
       this.addForm = this.songAddForm
+      this._addForm = this.songAddForm
       this.songAddFormIsShown = true;
       this.bookAddFormIsShown = false;
       this.musicAlbumAddFormIsShown = false;
@@ -121,5 +129,17 @@ export class AddMediaComponent {
       this.movieAddFormIsShown = false;
       this.interpretAddFormIsShown = false;
     }
+  }
+
+  isSubmitValid(): boolean {
+    if (this.addForm.valid) {
+      return false
+    }
+
+    return true;
+  }
+
+  oDelay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms)).then(() => window.location.reload())
   }
 }

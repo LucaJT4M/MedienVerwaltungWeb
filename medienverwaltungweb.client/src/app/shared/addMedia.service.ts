@@ -18,8 +18,9 @@ export class AddMediaService {
   newBook: BookDTO = {};
   newSong: SongDTO = {};
   newMusicAlbum: MusicAlbumDTO = {};
+  interpretExists: boolean = false
 
-  constructor(private http: HttpClient, private songService: SongService) {}
+  constructor(private songService: SongService) {}
 
   isSongComplete(): boolean {
     return (

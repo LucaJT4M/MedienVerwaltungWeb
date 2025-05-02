@@ -148,6 +148,73 @@ namespace MedienVerwaltungDBDLL
                     break;
             }
         }
+        public void Update<T>(T entity) where T : class
+        {
+            switch (entity)
+            {
+                case Song:
+                    var toUpdateSong = entity as Song ?? throw new Exception("Entity is not a Song");
+                    Songs.Update(toUpdateSong);
+                    var toUpdateItem = _context.Items.AsNoTracking().FirstOrDefault(i => i.MediaId == toUpdateSong.Id);
+
+                    if (toUpdateItem != null)
+                    {
+                        toUpdateItem.Location = toUpdateSong.Location;
+                        toUpdateItem.Title = toUpdateSong.Title;
+                        Items.Update(toUpdateItem);
+                    }
+
+                    break;
+
+                case Book:
+                    var toUpdateBook = entity as Book ?? throw new Exception("Entity is not a Book");
+                    Books.Update(toUpdateBook);
+                    var toUpdateBookItem = _context.Items.AsNoTracking().FirstOrDefault(i => i.MediaId == toUpdateBook.Isbn);
+                    if (toUpdateBookItem != null)
+                    {
+                        toUpdateBookItem.Title = toUpdateBook.Title;
+                        toUpdateBookItem.Location = toUpdateBook.Location;
+                        Items.Update(toUpdateBookItem);
+                    }
+
+                    break;
+
+                case Movie:
+                    var toUpdateMovie = entity as Movie ?? throw new Exception("Entity is not a Movie");
+                    Movies.Update(toUpdateMovie);
+                    var toUpdateMovieItem = _context.Items.AsNoTracking().FirstOrDefault(i => i.MediaId == toUpdateMovie.Id);
+                    if (toUpdateMovieItem != null)
+                    {
+                        toUpdateMovieItem.Title = toUpdateMovie.Title;
+                        toUpdateMovieItem.Location = toUpdateMovie.Location;
+                        Items.Update(toUpdateMovieItem);
+                    }
+
+                    break;
+
+                case MusicAlbum:
+                    var toUpdateAlbum = entity as MusicAlbum ?? throw new Exception("Entity is not a MusicAlbum");
+                    MusicAlbums.Update(toUpdateAlbum);
+                    var toUpdateAlbumItem = _context.Items.AsNoTracking().FirstOrDefault(i => i.MediaId == toUpdateAlbum.Id);
+                    if (toUpdateAlbumItem != null)
+                    {
+                        toUpdateAlbumItem.Title = toUpdateAlbum.Title;
+                        toUpdateAlbumItem.Location = toUpdateAlbum.Location;
+                        Items.Update(toUpdateAlbumItem);
+                    }
+
+                    break;
+
+                case Interpret:
+                    var toUpdateInterpret = entity as Interpret ?? throw new Exception("Entity is not a Interpret");
+                    Interprets.Update(toUpdateInterpret);
+                    break;
+
+
+                default:
+                    break;
+            }
+        }
         private async Task AddItems()
         {
             var songList = _context.Songs.AsNoTracking().Select(s => new Song

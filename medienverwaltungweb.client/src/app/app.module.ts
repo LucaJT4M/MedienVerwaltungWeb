@@ -16,6 +16,8 @@ import { MusicAlbumAddFormComponent } from './add-media/musicAlbum-add-form/musi
 import { CommonModule } from '@angular/common';
 import { BookAddFormComponent } from './add-media/book-add-form/book-add-form.component';
 import { BookComponent } from './book/book.component';
+import {ToastrModule} from "ngx-toastr"
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { BookComponent } from './book/book.component';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

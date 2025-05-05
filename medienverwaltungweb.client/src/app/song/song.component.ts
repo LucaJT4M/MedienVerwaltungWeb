@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SongDTO } from '../api-client';
+import { Song } from '../api-client';
 import { CommonModule } from '@angular/common';
 import { SongDetailsPopUpComponent } from '../song-details-pop-up/song-details-pop-up.component';
 import { SongService } from '../shared/song.service'; 
@@ -11,8 +11,8 @@ import { SongService } from '../shared/song.service';
   imports: [CommonModule, SongDetailsPopUpComponent],
 })
 export class SongComponent {
-  songs: SongDTO[] = [];
-  selectedSong: SongDTO = {};
+  songs: Song[] = [];
+  selectedSong: Song = {};
   currentPage: number = 1;
   canNavPrevious: boolean = false;
   canNavNext: boolean = false;
@@ -23,7 +23,7 @@ export class SongComponent {
     this.getDataForSongs(this.currentPage)
   }
 
-  selectSong(_selectedSong: SongDTO) {
+  selectSong(_selectedSong: Song) {
     this.selectedSong = _selectedSong;
   }
 

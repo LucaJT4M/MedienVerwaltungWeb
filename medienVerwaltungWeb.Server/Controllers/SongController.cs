@@ -23,40 +23,41 @@ namespace medienVerwaltungWeb.Server.Controllers
             _controllerFunctions = new();
         }
 
-        // GET: api/SongDTO
+        // GET: api/Song
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SongDTO>>> GetSongDTOs()
+        public async Task<ActionResult<IEnumerable<Song>>> GetSongs()
         {
-            return await _context.Songs.Select(s => new SongDTO
+            return await _context.Songs.Select(s => new Song
             {
                 Id = s.Id,
                 Title = s.Title,
                 Length = s.Length,
                 InterpretFullName = s.InterpretFullName,
-                Location = s.Location
+                Location = s.Location,
+                InterpretId = s.InterpretId
             }).ToListAsync();
         }
 
         [HttpGet("GetSongsByCount/{count}")]
-        public async Task<ActionResult<List<SongDTO>>> GetSongsByCount(int count)
+        public async Task<ActionResult<List<Song>>> GetSongsByCount(int count)
         {
             var toReturnList = await _context.Songs.ToListAsync();
 
-            return toReturnList.Take(count).Adapt<List<SongDTO>>();
+            return toReturnList.Take(count).Adapt<List<Song>>();
         }
 
         [HttpGet("SearchSongsByTitle/{title},{count}")]
-        public async Task<List<SongDTO>> SearchSongsByTitle(string title, int count)
+        public async Task<List<Song>> SearchSongsByTitle(string title, int count)
         {
             var toSortList = await _context.Songs.ToListAsync();
 
             var output = _controllerFunctions.SearchByTitle(toSortList, title, count);
 
-            return output.Adapt<List<SongDTO>>();
+            return output.Adapt<List<Song>>();
         }
 
         // [HttpGet("GetSongsByProperty/{count}")]
-        // public async Task<List<SongDTO>> GetSongsByProperty(int count, bool sortByTitle, bool sortByLength, bool sortByLocation, bool sortByInterpretName)
+        // public async Task<List<Song>> GetSongsByProperty(int count, bool sortByTitle, bool sortByLength, bool sortByLocation, bool sortByInterpretName)
         // {
         //     var toSortList = await _context.Songs.ToListAsync();
 
@@ -77,17 +78,17 @@ namespace medienVerwaltungWeb.Server.Controllers
         //         toSortList = toSortList.OrderBy(s => s.InterpretFullName).ToList();
         //     }
 
-        //     return toSortList.Take(count).Adapt<List<SongDTO>>();
+        //     return toSortList.Take(count).Adapt<List<Song>>();
         // }
 
         [HttpGet("SongPagination/{page},{itemsPerPage}")]
-        public async Task<ActionResult<List<SongDTO>>> SongPagination(int page, int itemsPerPage)
+        public async Task<ActionResult<List<Song>>> SongPagination(int page, int itemsPerPage)
         {
             var toSortList = await _context.Songs.ToListAsync();
 
             var output = _controllerFunctions.Pagination(toSortList, itemsPerPage, page);
 
-            return output.Adapt<List<SongDTO>>();
+            return output.Adapt<List<Song>>();
         }
 
         [HttpGet("IsPageLastPage/{page},{pageSize}")]
@@ -114,7 +115,7 @@ namespace medienVerwaltungWeb.Server.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<SongDTO>> GetSong(int id)
+        public async Task<ActionResult<Song>> GetSong(int id)
         {
             var song = await _unitOfWork.Songs.GetByIdAsync(id);
 
@@ -123,12 +124,12 @@ namespace medienVerwaltungWeb.Server.Controllers
                 return NotFound();
             }
 
-            return song.Adapt<SongDTO>();
+            return song.Adapt<Song>();
         }
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSong(int id, SongDTO song)
+        public async Task<IActionResult> UpdateSong(int id, Song song)
         {
             if (id != song.Id)
             {
@@ -157,14 +158,14 @@ namespace medienVerwaltungWeb.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<SongDTO>> PostSong(SongDTO song)
+        public async Task<ActionResult<Song>> PostSong(Song song)
         {
-            var toAddSong = await GetMissingSongInfo(song);
+            // var toAddSong = await GetMissingSongInfo(song);
 
-            _unitOfWork.Add(toAddSong);
+            _unitOfWork.Add(song);
             await _unitOfWork.BeginTransactionAsync();
 
-            return CreatedAtAction("GetSong", new { id = toAddSong.Id }, song);
+            return CreatedAtAction("GetSong", new { id = song.Id }, song);
         }
 
         [HttpDelete("{id}")]
@@ -186,7 +187,7 @@ namespace medienVerwaltungWeb.Server.Controllers
         {
             return _context.Songs.Any(e => e.Id == id);
         }
-        private async Task<Song> GetMissingSongInfo(SongDTO song)
+        private async Task<Song> GetMissingSongInfo(Song song)
         {
             var interprets = await _context.Interprets.Select(i => new Interpret
             {
@@ -201,49 +202,51 @@ namespace medienVerwaltungWeb.Server.Controllers
                 Title = song.Title ?? string.Empty,
                 Length = song.Length,
                 InterpretFullName = song.InterpretFullName ?? string.Empty,
-                Location = song.Location
+                Location = song.Location,
+                InterpretId = song.InterpretId
             };
-            var foundInterpret = false;
+            // var foundInterpret = false;
 
-            foreach (var interpret in interprets)
-            {
-                if (interpret.FullName == newSong.InterpretFullName)
-                {
-                    newSong.InterpretId = interpret.Id;
-                    foundInterpret = true;
-                    break;
-                }
-            }
+            // foreach (var interpret in interprets)
+            // {
+            //     if (interpret.FullName == newSong.InterpretFullName)
+            //     {
+            //         newSong.InterpretId = interpret.Id;
+            //         foundInterpret = true;
+            //         break;
+            //     }
+            // }
 
-            if (!foundInterpret)
-            {
-                var interpretName = newSong.InterpretFullName.Split(" ") ?? throw new Exception("Interpret name could not be splitted");
+            // if (!foundInterpret)
+            // {
+            //     var interpretName = newSong.InterpretFullName.Split(" ") ?? throw new Exception("Interpret name could not be splitted");
 
-                Interpret newInterpret;
+            //     Interpret newInterpret;
 
-                if (interpretName.Length > 2)
-                {
-                    newInterpret = new Interpret
-                    {
-                        FirstName = interpretName[0],
-                        Name = interpretName[1],
-                        BirthDate = DateTime.Now,
-                    };
-                }
-                else
-                {
-                    newInterpret = new Interpret
-                    {
-                        FirstName = interpretName[0],
-                        BirthDate = DateTime.Now,
-                    };
-                }
+            //     if (interpretName.Length > 2)
+            //     {
+            //         newInterpret = new Interpret
+            //         {
+            //             FirstName = interpretName[0],
+            //             Name = interpretName[1],
+            //             BirthDate = DateTime.Now,
+            //         };
+            //     }
+            //     else
+            //     {
+            //         newInterpret = new Interpret
+            //         {
+            //             FirstName = interpretName[0],
+            //             Name = interpretName[1],
+            //             BirthDate = DateTime.Now,
+            //         };
+            //     }
 
-                _unitOfWork.Add(newInterpret);
-                await _unitOfWork.BeginTransactionAsync();
+            //     _unitOfWork.Add(newInterpret);
+            //     await _unitOfWork.BeginTransactionAsync();
 
-                newSong.InterpretId = newInterpret.Id;
-            }
+            //     newSong.InterpretId = newInterpret.Id;
+            // }
 
             return newSong;
         }

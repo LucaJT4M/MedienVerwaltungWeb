@@ -1,5 +1,4 @@
-﻿using Mapster;
-using MedienVerwaltungDBDLL;
+﻿using MedienVerwaltungDBDLL;
 using MedienVerwaltungDLL.Models.Movie;
 using medienVerwaltungWeb.Server.Services.Functions;
 using Microsoft.AspNetCore.Mvc;
@@ -22,11 +21,11 @@ namespace medienVerwaltungWeb.Server.Controllers
             _controllerFunctions = new();
         }
 
-        // GET: api/MovieDTO
+        // GET: api/Movie
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovieDTO>>> GetMovieDTOs()
+        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
-            return await _context.Movies.Select(m => new MovieDTO
+            return await _context.Movies.Select(m => new Movie
             {
                 Id = m.Id,
                 Title = m.Title,
@@ -40,7 +39,7 @@ namespace medienVerwaltungWeb.Server.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<MovieDTO>> GetMovie(int id)
+        public async Task<ActionResult<Movie>> GetMovie(int id)
         {
             var movie = await _unitOfWork.Movies.GetByIdAsync(id);
 
@@ -49,38 +48,38 @@ namespace medienVerwaltungWeb.Server.Controllers
                 return NotFound();
             }
 
-            return movie.Adapt<MovieDTO>();
+            return movie;
         }
 
         [HttpGet("SearchMovieByTitle/{title},{count}")]
-        public async Task<ActionResult<List<MovieDTO>>> SearchMovieByTitle(string title, int count)
+        public async Task<ActionResult<List<Movie>>> SearchMovieByTitle(string title, int count)
         {
             var toSortList = await _context.Movies.ToListAsync();
 
             var output = _controllerFunctions.SearchByTitle(toSortList, title, count);
 
-            return output.Adapt<List<MovieDTO>>();
+            return output;
         }
 
         [HttpGet("MoviePagination/{page},{pageSize}")]
-        public async Task<ActionResult<List<MovieDTO>>> MoviePagination(int page, int pageSize)
+        public async Task<ActionResult<List<Movie>>> MoviePagination(int page, int pageSize)
         {
             var toSortList = await _context.Movies.ToListAsync();
 
             var output = _controllerFunctions.Pagination(toSortList, page, pageSize);
 
-            return output.Adapt<List<MovieDTO>>();
+            return output;
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMovie(int id, MovieDTO movie)
+        public async Task<IActionResult> UpdateMovie(int id, Movie movie)
         {
             if (id != movie.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(movie.Adapt<Movie>()).State = EntityState.Modified;
+            _context.Entry(movie).State = EntityState.Modified;
 
             try
             {
@@ -102,14 +101,12 @@ namespace medienVerwaltungWeb.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<MovieDTO>> PostMovie(MovieDTO movie)
+        public async Task<ActionResult<Movie>> PostMovie(Movie movie)
         {
-            var toAddSong = movie.Adapt<Movie>();
-
-            _unitOfWork.Add(toAddSong);
+            _unitOfWork.Add(movie);
             await _unitOfWork.BeginTransactionAsync();
 
-            return CreatedAtAction("GetMovie", new { id = toAddSong.Id }, movie);
+            return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
         }
 
         [HttpDelete("{id}")]

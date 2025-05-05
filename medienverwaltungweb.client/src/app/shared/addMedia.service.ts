@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   BookDTO,
   Interpret,
   MovieDTO,
   MusicAlbumDTO,
-  SongDTO,
+  Song,
 } from '../api-client';
 import { SongService } from './song.service';
 
@@ -16,7 +15,7 @@ export class AddMediaService {
   newInterpret: Interpret = {};
   newMovie: MovieDTO = {};
   newBook: BookDTO = {};
-  newSong: SongDTO = {};
+  newSong: Song = {};
   newMusicAlbum: MusicAlbumDTO = {};
   interpretExists: boolean = false
 
@@ -35,14 +34,6 @@ export class AddMediaService {
   }
 
   addSong() {
-    this.songService.addSong(this.newSong).subscribe({
-      next: (res) => {
-        window.location.reload();
-        console.log(res)
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });;
+    return this.songService.addSong(this.newSong);
   }
 }

@@ -3,7 +3,8 @@ import { MediaType } from '../api-client/model/media';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AddMediaService } from '../shared/addMedia.service';
 import { ToasterService } from '../shared/toaster.service';
-import { delay } from 'rxjs';
+import { InterpretService } from '../shared/interpretService.service';
+import { Interpret } from '../api-client';
 
 @Component({
   selector: 'app-add-media',
@@ -31,13 +32,7 @@ export class AddMediaComponent {
     },
   ];
   newMediaType: MediaType = {};
-  // testSong: SongDTO = {
-  //   id: 1,
-  //   interpretFullName: 'Keine Ahnung',
-  //   length: 5,
-  //   location: 'Kein Ahnung Location',
-  //   title: 'TestSongTitel',
-  // };
+  addedInterpret: Interpret = {}
   mediaTypeOutput: string | any = '';
   songAddFormIsShown: boolean = false;
   movieAddFormIsShown: boolean = false;
@@ -62,7 +57,7 @@ export class AddMediaComponent {
     location: new FormControl("")
   })
 
-  constructor(public addService: AddMediaService, private toastServ: ToasterService) { }
+  constructor(public addService: AddMediaService, private toastServ: ToasterService, private interprService: InterpretService) { }
 
   changedMediaType(event: Event) {
     const type = (event.target as HTMLInputElement).value;
@@ -77,12 +72,13 @@ export class AddMediaComponent {
       this.addService.newSong.location = this.addForm.value.location;
       this.addService.newSong.interpretFullName =
         this.addService.newInterpret.fullName;
-      
+
       this.addForm = this.songAddForm
       this.addForm.reset()
 
       if (this.addService.isSongComplete()) {
-        this.addService.addSong();
+        this.addSong()
+        console.log(this.addService.newInterpret)
       } else {
         console.log("Form incomplete")
         this.toastServ.error("Bitte alle Felder beim Interpreten ausfüllen!", "Song wurde nicht hinzugefügt!")
@@ -130,7 +126,7 @@ export class AddMediaComponent {
       this.interpretAddFormIsShown = false;
     }
   }
-
+ 
   isSubmitValid(): boolean {
     if (this.addForm.valid) {
       return false
@@ -139,7 +135,50 @@ export class AddMediaComponent {
     return true;
   }
 
-  oDelay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms)).then(() => window.location.reload())
+  async oDelay(ms: number) {
+    await new Promise(resolve => setTimeout(resolve, ms));
+    return window.location.reload();
+  }
+
+  addSong() {
+    if (this.interprService.interpretAlreadyExists(this.addService.newInterpret)) {
+      // Wenn Interpret noch nicht existiert
+      console.log("Interpret doesn't exist")
+      this.interprService.addNewInterpret(this.addService.newInterpret).subscribe({
+        next: (res) => {
+          this.addedInterpret = res as Interpret
+          this.addService.newSong.interpretId = this.addedInterpret.id
+
+          this.addService.addSong().subscribe({
+            next: () => {
+              window.location.reload();
+              this.toastServ.success("Song wurde hinzugefügt!");
+            },
+            error: (err) => {
+              this.toastServ.error(err, "Song wurde nicht hinzugefügt!")
+              console.log(err);
+            },
+          });
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    } else {
+      console.log("Interpret exists")
+      this.addService.newSong.interpretId = this.addService.newInterpret.id
+      this.addService.newSong.interpretFullName = this.addService.newInterpret.fullName
+
+      this.addService.addSong().subscribe({
+        next: () => {
+          window.location.reload();
+          this.toastServ.success("Song wurde hinzugefügt!");
+        },
+        error: (err) => {
+          this.toastServ.error(err, "Song wurde nicht hinzugefügt!")
+          console.log(err);
+        },
+      });
+    }
   }
 }

@@ -24,18 +24,15 @@ export class InterpretService {
     });
   }
 
-  getInterpretById(id: number): Observable<Interpret> {
+  getInterpretById(id: number | undefined): Observable<Interpret> {
     return this.http.get<Interpret>(this.url + `/Interpret/${id}`);
   }
 
   addNewInterpret(interpret: Interpret) {
-    this.http.post(this.url + '/Interpret', interpret).subscribe({
-      next: (res) => {
-        this.interpretList.push(res as Interpret);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    return this.http.post(this.url + '/Interpret', interpret)
+  }
+
+  interpretAlreadyExists(interpret: Interpret): Observable<boolean>{
+    return this.http.get<boolean>(this.url + `/Interpret/InterpretExists/?Id=${interpret.id}&Name=${interpret.name}&Gender=${interpret.gender}&BirthDate=${interpret.birthDate}&FullName=${interpret.fullName}&FirstName=${interpret.firstName}`)
   }
 }

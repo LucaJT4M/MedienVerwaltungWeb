@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { Actor, MovieDTO, SongDTO } from '../api-client';
+import { Actor, MovieDTO, Song } from '../api-client';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,8 +20,8 @@ export class MedienVerwaltungWebService {
     return this.http.get<Actor[]>(this.url + '/Actor')
   }
 
-  getSongs(): Observable<SongDTO[]> {
-    return this.http.get<SongDTO[]>(this.url + "/Song")
+  getSongs(): Observable<Song[]> {
+    return this.http.get<Song[]>(this.url + "/Song")
   }
 }
 

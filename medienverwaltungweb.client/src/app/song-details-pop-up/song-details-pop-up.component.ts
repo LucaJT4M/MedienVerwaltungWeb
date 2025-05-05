@@ -1,5 +1,5 @@
 import { Component, Input, } from '@angular/core';
-import { SongDTO } from '../api-client';
+import { Song } from '../api-client';
 import { SongService } from '../shared/song.service';
 import { SongComponent } from '../song/song.component';
 
@@ -10,7 +10,7 @@ import { SongComponent } from '../song/song.component';
   styleUrl: './song-details-pop-up.component.css',
 })
 export class SongDetailsPopUpComponent {
-  @Input() selectedSong: SongDTO = {};
+  @Input() selectedSong: Song = {};
   @Input() currentPage: number = 1;
   songTitleIF: string = '';
 
@@ -23,7 +23,7 @@ export class SongDetailsPopUpComponent {
     newSongLength: number,
     newSongLocation: string
   ) {
-    var toUpdateSong: SongDTO = {
+    var toUpdateSong: Song = {
       id: toUpdateSongId,
       title: newTitle,
       interpretFullName: newInterpretName,

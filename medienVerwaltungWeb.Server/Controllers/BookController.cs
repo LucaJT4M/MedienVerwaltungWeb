@@ -23,9 +23,9 @@ namespace medienVerwaltungWeb.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookDTO>>> GetBookDTOs()
+        public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
         {
-            return await _context.Books.Select(b => new BookDTO
+            return await _context.Books.Select(b => new Book
             {
                 Isbn = b.Isbn,
                 Title = b.Title,
@@ -33,12 +33,13 @@ namespace medienVerwaltungWeb.Server.Controllers
                 InterpretFullName = b.InterpretFullName,
                 Location = b.Location,
                 PageCount = b.PageCount,
-                ReleaseYear = b.ReleaseYear
+                ReleaseYear = b.ReleaseYear,
+                InterpretId = b.InterpretId
             }).ToListAsync();
         }
 
         [HttpGet("{isbn}")]
-        public async Task<ActionResult<BookDTO>> GetBook(int isbn)
+        public async Task<ActionResult<Book>> GetBook(int isbn)
         {
             var book = await _unitOfWork.Books.GetByIdAsync(isbn);
 
@@ -47,31 +48,31 @@ namespace medienVerwaltungWeb.Server.Controllers
                 return NotFound();
             }
 
-            return book.Adapt<BookDTO>();
+            return book;
         }
 
         [HttpGet("SearchBooksByTitle/{title},{count}")]
-        public async Task<ActionResult<List<BookDTO>>> SearchBooksByTitle(string title, int count)
+        public async Task<ActionResult<List<Book>>> SearchBooksByTitle(string title, int count)
         {
             var toSortList = await _context.Books.ToListAsync();
 
             var output = _controllerFunctions.SearchByTitle(toSortList, title, count);
 
-            return output.Adapt<List<BookDTO>>();
+            return output;
         }
 
         [HttpGet("BookPagination/{page},{pageSize}")]
-        public async Task<ActionResult<List<BookDTO>>> BookPagination(int page, int pageSize)
+        public async Task<ActionResult<List<Book>>> BookPagination(int page, int pageSize)
         {
             var toSortList = await _context.Books.ToListAsync();
 
             var output = _controllerFunctions.Pagination(toSortList, page, pageSize);
 
-            return output.Adapt<List<BookDTO>>();
+            return output;
         }
 
         [HttpPut("{isbn}")]
-        public async Task<IActionResult> UpdateBook(int isbn, BookDTO book)
+        public async Task<IActionResult> UpdateBook(int isbn, Book book)
         {
             if (isbn != book.Isbn)
             {
@@ -100,14 +101,12 @@ namespace medienVerwaltungWeb.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<BookDTO>> PostBook(BookDTO book)
+        public async Task<ActionResult<Book>> PostBook(Book book)
         {
-            var toAddBook = await GetMissingBookInfo(book);
-
-            _unitOfWork.Add(toAddBook);
+            _unitOfWork.Add(book);
             await _unitOfWork.BeginTransactionAsync();
 
-            return CreatedAtAction("GetBook", new { isbn = toAddBook.Isbn }, book);
+            return CreatedAtAction("GetBook", new { isbn = book.Isbn }, book);
         }
 
         [HttpDelete("{isbn}")]
@@ -129,7 +128,7 @@ namespace medienVerwaltungWeb.Server.Controllers
         {
             return _context.Books.Any(b => b.Isbn == isbn);
         }
-        private async Task<Book> GetMissingBookInfo(BookDTO book)
+        private async Task<Book> GetMissingBookInfo(Book book)
         {
             var interprets = await _context.Interprets.Select(i => new Interpret
             {

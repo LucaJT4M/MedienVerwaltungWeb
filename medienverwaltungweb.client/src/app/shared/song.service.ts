@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { SongDTO } from '../api-client';
+import { Song } from '../api-client';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class SongService {
   private url: string = environment.apiBaseUrl;
-  songList: SongDTO[] = [];
+  songList: Song[] = [];
   maxPages: number = 1;
   pageSize: number = 10;
   isLastPage: boolean = false
@@ -18,8 +18,8 @@ export class SongService {
     this.getSongPageCount()
   }
 
-  getSongPage(page: number): Observable<SongDTO[]> {
-    return this.http.get<SongDTO[]>(this.url + `/Song/SongPagination/${page},${this.pageSize}`)
+  getSongPage(page: number): Observable<Song[]> {
+    return this.http.get<Song[]>(this.url + `/Song/SongPagination/${page},${this.pageSize}`)
   }
 
   getSongPageCount(): Observable<number> {
@@ -31,7 +31,7 @@ export class SongService {
       .get(this.url + `/Song/SearchSongsByTitle/${searchTerm},${this.pageSize}`)
       .subscribe({
         next: (res) => {
-          this.songList = res as SongDTO[];
+          this.songList = res as Song[];
         },
         error: (err) => {
           console.log(err);
@@ -43,7 +43,7 @@ export class SongService {
     return this.http.delete(this.url + `/Song/${songId}`)
   }
 
-  saveSong(toUpdateSong: SongDTO, currentPage: number) {
+  saveSong(toUpdateSong: Song, currentPage: number) {
     this.http
       .put(this.url + `/Song/${toUpdateSong.id}`, toUpdateSong)
       .subscribe({
@@ -56,7 +56,7 @@ export class SongService {
       });
   }
 
-  addSong(toAddSong: SongDTO) {
+  addSong(toAddSong: Song) {
     return this.http.post(this.url + `/Song`, toAddSong)
   }
 

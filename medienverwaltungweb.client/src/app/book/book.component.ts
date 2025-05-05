@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { MedienVerwaltungWebService } from '../shared/medien-verwaltung-web.service';
+import { InterpretService } from '../shared/interpretService.service';
+import { Interpret } from '../api-client';
 
 @Component({
   selector: 'app-book',

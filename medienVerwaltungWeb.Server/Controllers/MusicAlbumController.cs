@@ -1,4 +1,3 @@
-using Mapster;
 using MedienVerwaltungDBDLL;
 using MedienVerwaltungDLL.Models.Interpret;
 using MedienVerwaltungDLL.Models.MusicAlbum;
@@ -23,11 +22,11 @@ namespace medienVerwaltungWeb.Server.Controllers
             _controllerFunctions = new();
         }
 
-        // GET: api/MusicAlbumDTO
+        // GET: api/MusicAlbum
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MusicAlbumDTO>>> GetMusicAlbumDTOs()
+        public async Task<ActionResult<IEnumerable<MusicAlbum>>> GetMusicAlbums()
         {
-            return await _context.MusicAlbums.Select(m => new MusicAlbumDTO
+            return await _context.MusicAlbums.Select(m => new MusicAlbum
             {
                 Id = m.Id,
                 Title = m.Title,
@@ -38,7 +37,7 @@ namespace medienVerwaltungWeb.Server.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<MusicAlbumDTO>> GetMusicAlbum(int id)
+        public async Task<ActionResult<MusicAlbum>> GetMusicAlbum(int id)
         {
             var musicAlbum = await _unitOfWork.MusicAlbums.GetByIdAsync(id);
 
@@ -47,36 +46,36 @@ namespace medienVerwaltungWeb.Server.Controllers
                 return NotFound();
             }
 
-            return musicAlbum.Adapt<MusicAlbumDTO>();
+            return musicAlbum;
         }
 
         [HttpGet("SearchMusicAlbumByTitle/{title},{count}")]
-        public async Task<ActionResult<List<MusicAlbumDTO>>> SearchMusicAlbumByTitle(string title, int count)
+        public async Task<ActionResult<List<MusicAlbum>>> SearchMusicAlbumByTitle(string title, int count)
         {
             var toSortList = await _context.MusicAlbums.ToListAsync();
 
             var output = _controllerFunctions.SearchByTitle(toSortList, title, count);
 
-            return output.Adapt<List<MusicAlbumDTO>>();
+            return output;
         }
 
         [HttpGet("MusicAlbumPagination/{page},{pageSize}")]
-        public async Task<ActionResult<List<MusicAlbumDTO>>> MusicAlbumPagination(int page, int pageSize)
+        public async Task<ActionResult<List<MusicAlbum>>> MusicAlbumPagination(int page, int pageSize)
         {
             var toSortList = await _context.MusicAlbums.ToListAsync();
 
-            return _controllerFunctions.Pagination(toSortList, pageSize, page).Adapt<List<MusicAlbumDTO>>();
+            return _controllerFunctions.Pagination(toSortList, pageSize, page);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMusicAlbum(int id, MusicAlbumDTO musicAlbum)
+        public async Task<IActionResult> UpdateMusicAlbum(int id, MusicAlbum musicAlbum)
         {
             if (id != musicAlbum.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(musicAlbum.Adapt<MusicAlbum>()).State = EntityState.Modified;
+            _context.Entry(musicAlbum).State = EntityState.Modified;
 
             try
             {
@@ -98,14 +97,12 @@ namespace medienVerwaltungWeb.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<MusicAlbumDTO>> PostMusicAlbum(MusicAlbumDTO musicAlbum)
+        public async Task<ActionResult<MusicAlbum>> PostMusicAlbum(MusicAlbum musicAlbum)
         {
-            var toAddMusicAlbum = await GetMissingMusicAlbumInfo(musicAlbum);
-
-            _unitOfWork.Add(toAddMusicAlbum);
+            _unitOfWork.Add(musicAlbum);
             await _unitOfWork.BeginTransactionAsync();
 
-            return CreatedAtAction("GetMusicAlbum", new { id = toAddMusicAlbum.Id }, musicAlbum);
+            return CreatedAtAction("GetMusicAlbum", new { id = musicAlbum.Id }, musicAlbum);
         }
 
         [HttpDelete("{id}")]
@@ -128,7 +125,7 @@ namespace medienVerwaltungWeb.Server.Controllers
             return _context.MusicAlbums.Any(e => e.Id == id);
         }
 
-        private async Task<MusicAlbum> GetMissingMusicAlbumInfo(MusicAlbumDTO musicAlbum)
+        private async Task<MusicAlbum> GetMissingMusicAlbumInfo(MusicAlbum musicAlbum)
         {
             var interprets = await _context.Interprets.Select(i => new Interpret
             {

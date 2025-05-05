@@ -67,6 +67,7 @@ namespace MedienVerwaltungDBDLL
                 case Song:
                     var newSong = entity as Song ?? throw new Exception("Entity is not a Song");
                     await Songs.AddAsync(newSong);
+                    System.Console.WriteLine("Added Song");
                     break;
 
                 case Book:

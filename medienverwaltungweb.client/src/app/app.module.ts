@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AddMediaComponent } from './add-media/add-media.component';
-import { AddMediaFormComponent } from './AddMedia/add-media-form/add-media-form.component';
 import { SongAddFormComponent } from './add-media/song-add-form/song-add-form.component';
 import { InterpretFormComponent } from './add-media/interpret-form/interpret-form.component';
 import { MovieAddFormComponent } from './add-media/movie-add-form/movie-add-form.component';
@@ -23,7 +22,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
   declarations: [
     AppComponent,
     AddMediaComponent,
-    AddMediaFormComponent,
     MovieAddFormComponent,
     ActorAddFormComponent,
     MusicAlbumAddFormComponent,

@@ -1,3 +1,5 @@
+using System.Linq;
+using Mapster;
 using MedienVerwaltungDBDLL;
 using MedienVerwaltungDLL.Models.Interpret;
 using medienVerwaltungWeb.Server.Services.Functions;
@@ -92,6 +94,20 @@ namespace medienVerwaltungWeb.Server.Controllers
             return Interpret;
         }
 
+        [HttpGet("InterpretExists")]
+        public async Task<bool> InterpretExists([FromQuery] Interpret interpret)
+        {
+            var interpretList = await _context.Interprets.AsNoTracking().ToListAsync();
+
+            foreach (var currentInterpret in interpretList)
+            {
+                if (currentInterpret.FullName == interpret.FullName && currentInterpret.BirthDate == interpret.BirthDate && currentInterpret.Gender == interpret.Gender)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateInterpret(int id, Interpret interpret)

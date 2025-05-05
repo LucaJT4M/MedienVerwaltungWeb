@@ -25,7 +25,6 @@ export class InterpretFormComponent implements AfterViewInit {
     id: 0,
     name: '',
     firstName: '',
-    birthDate: new Date().toDateString(),
     gender: '',
   };
 

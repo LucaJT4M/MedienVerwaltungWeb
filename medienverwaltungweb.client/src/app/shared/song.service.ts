@@ -1,29 +1,34 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { Song } from '../api-client';
+import { SongDTO } from '../api-client';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { InterpretService } from './interpretService.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SongService {
   private url: string = environment.apiBaseUrl;
-  songList: Song[] = [];
+  songList: SongDTO[] = [];
   maxPages: number = 1;
   pageSize: number = 10;
   isLastPage: boolean = false
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private interpretService: InterpretService) {
     this.getSongPageCount()
   }
 
-  getSongPage(page: number): Observable<Song[]> {
-    return this.http.get<Song[]>(this.url + `/Song/SongPagination/${page},${this.pageSize}`)
+  getSongPage(page: number): Observable<SongDTO[]> {
+    return this.http.get<SongDTO[]>(this.url + `/Song/SongPagination/${page},${this.pageSize}`)
   }
 
   getSongPageCount(): Observable<number> {
     return this.http.get<number>(this.url + `/Song/GetPageCount/${this.pageSize}`)
+  }
+
+  getInterpretNames(): Observable<string[]> {
+    return this.interpretService.getInterpretFullNames()
   }
 
   searchSongByTitle(searchTerm: string) {
@@ -31,7 +36,7 @@ export class SongService {
       .get(this.url + `/Song/SearchSongsByTitle/${searchTerm},${this.pageSize}`)
       .subscribe({
         next: (res) => {
-          this.songList = res as Song[];
+          this.songList = res as SongDTO[];
         },
         error: (err) => {
           console.log(err);
@@ -43,7 +48,7 @@ export class SongService {
     return this.http.delete(this.url + `/Song/${songId}`)
   }
 
-  saveSong(toUpdateSong: Song, currentPage: number) {
+  saveSong(toUpdateSong: SongDTO, currentPage: number) {
     this.http
       .put(this.url + `/Song/${toUpdateSong.id}`, toUpdateSong)
       .subscribe({
@@ -56,7 +61,7 @@ export class SongService {
       });
   }
 
-  addSong(toAddSong: Song) {
+  addSong(toAddSong: SongDTO) {
     return this.http.post(this.url + `/Song`, toAddSong)
   }
 

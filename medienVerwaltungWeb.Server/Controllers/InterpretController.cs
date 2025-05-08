@@ -1,4 +1,3 @@
-using System.Linq;
 using Mapster;
 using MedienVerwaltungDBDLL;
 using MedienVerwaltungDLL.Models.Interpret;
@@ -109,6 +108,14 @@ namespace medienVerwaltungWeb.Server.Controllers
             return false;
         }
 
+        [HttpGet("GetInterpretFullnames")]
+        public async Task<IEnumerable<string>> GetInterpretFullnames()
+        {
+            var interpretList = await _context.Interprets.AsNoTracking().Select(i => i.FullName).ToListAsync();
+
+            return interpretList;
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateInterpret(int id, Interpret interpret)
         {
@@ -139,9 +146,22 @@ namespace medienVerwaltungWeb.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Interpret>> PostInterpret(Interpret interpret)
+        public async Task<ActionResult<InterpretDTO>> PostInterpret(InterpretDTO inputInterpret)
         {
             // var toAddInterpret = await GetMissingInterpretInfo(interpret);
+
+            var interpret = inputInterpret.Adapt<Interpret>();
+
+            var dateArr = inputInterpret.BirthDate.Split(".");
+
+            if (dateArr.Length == 3)
+            {
+                interpret.BirthDate = new DateTime(int.Parse(dateArr[2]), int.Parse(dateArr[1]), int.Parse(dateArr[0]));
+            }
+            else
+            {
+                interpret.BirthDate = DateTime.Now;
+            }
 
             _unitOfWork.Add(interpret);
             await _unitOfWork.BeginTransactionAsync();

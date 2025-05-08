@@ -35,4 +35,8 @@ export class InterpretService {
   interpretAlreadyExists(interpret: Interpret): Observable<boolean>{
     return this.http.get<boolean>(this.url + `/Interpret/InterpretExists/?Id=${interpret.id}&Name=${interpret.name}&Gender=${interpret.gender}&BirthDate=${interpret.birthDate}&FullName=${interpret.fullName}&FirstName=${interpret.firstName}`)
   }
+
+  getInterpretFullNames(): Observable<string[]> {
+    return this.http.get<string[]>(this.url + "/Interpret/GetInterpretFullnames")
+  }
 }

@@ -24,7 +24,7 @@ export class NavbarComponent {
   public movieIsSelected: boolean = false;
   public albumIsSelected: boolean = false;
   public actorIsSelected: boolean = false;
-  public addMediaIsSelected: boolean = false;
+  public addPage: boolean = false;
   searchTitle: string = '';
 
   constructor(private router: Router, private songService: SongService) {}
@@ -58,7 +58,7 @@ export class NavbarComponent {
         this.movieIsSelected = false;
         this.albumIsSelected = false;
         this.actorIsSelected = false;
-        this.addMediaIsSelected = false;
+        this.addPage = false;
         break;
 
       case 'song':
@@ -68,7 +68,7 @@ export class NavbarComponent {
         this.movieIsSelected = false;
         this.albumIsSelected = false;
         this.actorIsSelected = false;
-        this.addMediaIsSelected = false;
+        this.addPage = false;
         break;
 
       case 'book':
@@ -78,7 +78,7 @@ export class NavbarComponent {
         this.movieIsSelected = false;
         this.albumIsSelected = false;
         this.actorIsSelected = false;
-        this.addMediaIsSelected = false;
+        this.addPage = false;
         break;
 
       case 'movie':
@@ -88,7 +88,7 @@ export class NavbarComponent {
         this.movieIsSelected = true;
         this.albumIsSelected = false;
         this.actorIsSelected = false;
-        this.addMediaIsSelected = false;
+        this.addPage = false;
         break;
 
       case 'music-album':
@@ -98,7 +98,7 @@ export class NavbarComponent {
         this.movieIsSelected = false;
         this.albumIsSelected = true;
         this.actorIsSelected = false;
-        this.addMediaIsSelected = false;
+        this.addPage = false;
         break;
 
       case 'actor':
@@ -108,7 +108,7 @@ export class NavbarComponent {
         this.movieIsSelected = false;
         this.albumIsSelected = false;
         this.actorIsSelected = true;
-        this.addMediaIsSelected = false;
+        this.addPage = false;
         break;
 
       case 'add-media':
@@ -118,7 +118,7 @@ export class NavbarComponent {
         this.movieIsSelected = false;
         this.albumIsSelected = false;
         this.actorIsSelected = false;
-        this.addMediaIsSelected = true;
+        this.addPage = true;
         break;
 
       default:

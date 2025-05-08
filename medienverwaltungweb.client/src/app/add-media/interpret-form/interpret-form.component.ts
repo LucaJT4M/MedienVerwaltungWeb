@@ -1,38 +1,31 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
-import { Datepicker } from 'vanillajs-datepicker';
+import { AfterViewInit, Component } from '@angular/core';
+import { Datepicker, DateRangePicker } from 'vanillajs-datepicker';
 import { CommonModule } from '@angular/common';
 import { Interpret } from '../../api-client';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InterpretService } from '../../shared/interpretService.service';
 import { AddMediaService } from '../../shared/addMedia.service';
-import { AddMediaComponent } from '../add-media.component';
+import { ToasterService } from '../../shared/toaster.service';
 
 @Component({
   selector: 'app-interpret-form',
   templateUrl: './interpret-form.component.html',
   styleUrls: ['./interpret-form.component.css'],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class InterpretFormComponent implements AfterViewInit {
-  @Input() interpretFullName: string | null | undefined = ""
+  newInterpret: Interpret = {}
+  birthDateGotChanged: boolean = false
 
-  selectedIntepret: Interpret = {
-    name: '',
-    firstName: '',
-    gender: '',
-  };
-  emptyInterpret: Interpret = {
-    id: 0,
-    name: '',
-    firstName: '',
-    gender: '',
-  };
+  addForm: FormGroup = new FormGroup({
+    firstName: new FormControl("", Validators.required),
+    name: new FormControl("", Validators.required),
+    birthDate: new FormControl("", Validators.required),
+    gender: new FormControl("", Validators.required),
+  })
 
   constructor(
-    public service: InterpretService,
-    private addService: AddMediaService,
-    private addMedia: AddMediaComponent
-  ) {
+    public service: InterpretService, private toastrService: ToasterService) {
     service.getInterprets();
   }
 
@@ -50,43 +43,30 @@ export class InterpretFormComponent implements AfterViewInit {
     }
   }
 
-  selectExistingInterpret(event: Event) {
-    var existingInterpretIdAsString = (event.target as HTMLInputElement).value;
-    var existingInterpretId = +existingInterpretIdAsString;
-
-    if (existingInterpretId === this.emptyInterpret.id) {
-      this.selectedIntepret = this.emptyInterpret;
-    } else {
-      this.service.getInterpretById(existingInterpretId).subscribe({
-        next: (res) => {
-          this.selectedIntepret = res as Interpret;
-          this.addService.newInterpret = this.selectedIntepret;
-        },
-        error(err) {
-          console.log(err);
-        },
-      });
+  onSubmit() {
+    this.newInterpret = {
+      birthDate: this.addForm.get("birthDate")?.value,
+      firstName: this.addForm.get("firstName")?.value,
+      name: this.addForm.get("name")?.value,
+      gender: this.addForm.get("gender")?.value,
     }
+    this.addForm.reset()
+    this.service.addNewInterpret(this.newInterpret).subscribe({
+      next: () => {
+        window.location.reload()
+        this.toastrService.success("Interpret wurde hinzugefügt!")    
+      }, 
+      error: (err) => {
+        // window.location.reload()
+        this.toastrService.error("Interpretwurde nicht hinzugefügt")
+        console.log(err)
+      }
+    })
   }
 
-  inputFieldChanged(event: Event, toChangeVar: string) {
-    var inputFieldValue = (event.target as HTMLInputElement).value;
-
-    if (toChangeVar === 'FN') {
-      this.selectedIntepret.firstName = inputFieldValue;
-    } else if (toChangeVar === 'LN') {
-      this.selectedIntepret.name = inputFieldValue;
-    } else if (toChangeVar === 'BD') {
-      this.selectedIntepret.birthDate = inputFieldValue;
-    } else if (toChangeVar === 'G') {
-      this.selectedIntepret.gender = inputFieldValue;
-    }
-
-    this.selectedIntepret.fullName = `${this.selectedIntepret.firstName} ${this.selectedIntepret.name}`
-
-    this.addService.newInterpret = this.selectedIntepret;
-    this.addMedia.songAddForm.patchValue({
-      interpretFullName: this.selectedIntepret.fullName
+  birthDateClick(event: Event) {
+    this.addForm.patchValue({
+      birthDate: (event.target as HTMLInputElement).value
     })
   }
 }

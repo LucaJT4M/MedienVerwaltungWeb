@@ -103,7 +103,10 @@ namespace MedienVerwaltungDBDLL
                     Songs.Remove(toRemoveSong);
                     var toRemoveItem = _context.Items.AsNoTracking().FirstOrDefault(i => i.MediaId == toRemoveSong.Id);
 
-                    Items.Remove(toRemoveItem);
+                    if (toRemoveItem != null)
+                    {
+                        Items.Remove(toRemoveItem);
+                    }
 
                     break;
 

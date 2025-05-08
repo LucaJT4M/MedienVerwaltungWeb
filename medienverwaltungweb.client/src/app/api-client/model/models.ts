@@ -4,4 +4,4 @@ export * from './movieDTO';
 export * from './musicAlbumDTO';
 export * from './songDTO';
 export * from './interpret';
-export * from './media';
+export * from './addItem';

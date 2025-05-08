@@ -9,12 +9,11 @@
  */
 
 
-export interface Song { 
+export interface SongDTO { 
     id?: number;
     title?: string | null;
     interpretFullName?: string | null;
     location?: string | null;
     length?: number;
-    interpretId?: number
 }
 

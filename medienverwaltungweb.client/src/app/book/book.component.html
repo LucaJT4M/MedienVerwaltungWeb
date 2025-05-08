@@ -4,3 +4,15 @@
 {{txtValue}}
 <br>
 {{message}}
+<br>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <select class="form-select"
+    formControlName="username">
+        <option selected>Bitte wählen</option>
+        <option>Frau</option>
+        <option>Mann</option>
+        <option>Divers</option>
+    </select>
+  <input formControlName="email" type="email" placeholder="E-Mail" />
+  <button type="submit" [disabled]="userForm.invalid">Absenden</button>
+</form>

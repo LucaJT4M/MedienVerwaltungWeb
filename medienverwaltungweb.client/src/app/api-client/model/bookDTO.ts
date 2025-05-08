@@ -9,11 +9,12 @@
  */
 
 
-export interface BookDTO { 
+export interface Book { 
     isbn?: number;
     title?: string | null;
     description?: string | null;
     interpretFullName?: string | null;
+    interpretId?: number;
     pageCount?: number;
     releaseYear?: number;
     location?: string | null;

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
-  BookDTO,
+  Book,
   Interpret,
   MovieDTO,
   MusicAlbumDTO,
-  Song,
+  SongDTO,
 } from '../api-client';
 import { SongService } from './song.service';
 
@@ -14,8 +14,8 @@ import { SongService } from './song.service';
 export class AddMediaService {
   newInterpret: Interpret = {};
   newMovie: MovieDTO = {};
-  newBook: BookDTO = {};
-  newSong: Song = {};
+  newBook: Book = {};
+  newSong: SongDTO = {};
   newMusicAlbum: MusicAlbumDTO = {};
   interpretExists: boolean = false
 
@@ -31,6 +31,17 @@ export class AddMediaService {
       this.newInterpret.name !== "" &&
       this.newInterpret.gender !== ""
     );
+  }
+
+  isBookComplete(): boolean {
+    return (
+      this.newBook.title !== undefined &&
+      this.newBook.location !== undefined &&
+      this.newBook.description !== "" &&
+      this.newBook.interpretFullName !== "" &&
+      this.newBook.pageCount !== undefined &&
+      this.newBook.releaseYear !== undefined
+    )
   }
 
   addSong() {

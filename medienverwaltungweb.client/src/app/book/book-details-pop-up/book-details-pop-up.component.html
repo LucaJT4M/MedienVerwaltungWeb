@@ -1,0 +1,96 @@
+<div class="modal fade" id="bookDetailsModal" tabindex="-1"
+aria-labelledby="exampleModalLabel" 
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+				<ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Isbn:</span>
+                        <label class="form-control">{{selectedBook.isbn}}</label>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Titel:</span>
+                        <input type="text"
+                        #bookTitleIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedBook.title}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Interpret:</span>
+                        <input type="text"
+                        #bookInterpretIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedBook.interpretFullName}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Beschreibung:</span>
+                        <input type="text"
+                        #bookDescriptionIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedBook.description}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Seitenanzahl:</span>
+                        <input type="number"
+                        #bookPageCountIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedBook.pageCount}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Erscheinungsjahr:</span>
+                        <input type="number"
+                        #bookReleasYearIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedBook.releaseYear}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Speicherort:</span>
+                        <input type="text"
+                        #bookLocationIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedBook.location}}"
+                        autocomplete="off">
+                    </li>
+                </ul>
+			</div>
+            <div class="modal-footer">
+                <button 
+                type="button" 
+                class="btn btn-danger" 
+                data-bs-dismiss="modal" 
+                (click)="selectedBook.isbn !== undefined && deleteBook(selectedBook.isbn, currentPage)">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" 
+                class="btn btn-primary" 
+                data-bs-dismiss="modal" 
+                (click)="saveBook(selectedBook.isbn, bookTitleIF.value, bookInterpretIF.value, bookDescriptionIF.value, bookPageCountIF.valueAsNumber, bookReleasYearIF.valueAsNumber, bookLocationIF.value)">
+                    Änderungen Speichern
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

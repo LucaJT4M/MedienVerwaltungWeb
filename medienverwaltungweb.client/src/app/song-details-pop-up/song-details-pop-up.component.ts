@@ -31,7 +31,14 @@ export class SongDetailsPopUpComponent {
       location: newSongLocation,
     };
 
-    this.service.saveSong(toUpdateSong, this.currentPage);
+    this.service.saveSong(toUpdateSong).subscribe({
+      next: () => {
+        this.songComp.getDataForSongs(this.currentPage)
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 
   deleteSong(songId: number, currentPage: number) {

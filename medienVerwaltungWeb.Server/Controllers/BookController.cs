@@ -66,9 +66,31 @@ namespace medienVerwaltungWeb.Server.Controllers
         {
             var toSortList = await _context.Books.ToListAsync();
 
-            var output = _controllerFunctions.Pagination(toSortList, page, pageSize);
+            var output = _controllerFunctions.Pagination(toSortList, pageSize, page);
 
             return output;
+        }
+
+        [HttpGet("GetPageCount/{pageSize}")]
+        public async Task<ActionResult<int>> GetPageCount(int pageSize)
+        {
+            var bookList = await _context.Books.ToListAsync();
+
+            return bookList.Count / pageSize;
+        }
+
+        [HttpGet("IsPageLastPage/{page},{pageSize}")]
+        public async Task<ActionResult<bool>> IsPageLastPage(int page, int pageSize)
+        {
+            var books = await _context.Books.ToListAsync();
+            var toReturnBool = false;
+
+            if (books.Count / pageSize <= page)
+            {
+                toReturnBool = true;
+            }
+
+            return toReturnBool;
         }
 
         [HttpPut("{isbn}")]

@@ -50,6 +50,8 @@ namespace MedienVerwaltungDBDLL
                 var output = await SaveChangesAsync();
                 await AddItems();
                 var itemsOutput = await SaveChangesAsync();
+                System.Console.WriteLine("DB Changes: " + output);
+                System.Console.WriteLine("ItemChanges: " + itemsOutput);
 
                 await transaction.CommitAsync();
             }

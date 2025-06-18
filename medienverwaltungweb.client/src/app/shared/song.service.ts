@@ -48,17 +48,8 @@ export class SongService {
     return this.http.delete(this.url + `/Song/${songId}`)
   }
 
-  saveSong(toUpdateSong: SongDTO, currentPage: number) {
-    this.http
-      .put(this.url + `/Song/${toUpdateSong.id}`, toUpdateSong)
-      .subscribe({
-        next: () => {
-          this.getSongPage(currentPage);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+  saveSong(toUpdateSong: SongDTO) {
+    return this.http.put(this.url + `/Song/${toUpdateSong.id}`, toUpdateSong)
   }
 
   addSong(toAddSong: SongDTO) {

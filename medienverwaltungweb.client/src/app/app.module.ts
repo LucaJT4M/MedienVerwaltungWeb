@@ -16,7 +16,8 @@ import { CommonModule } from '@angular/common';
 import { BookAddFormComponent } from './add-media/book-add-form/book-add-form.component';
 import { BookComponent } from './book/book.component';
 import {ToastrModule} from "ngx-toastr"
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { BookDetailsPopUpComponent } from './book/book-details-pop-up/book-details-pop-up.component'
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
     BookAddFormComponent,
     SongAddFormComponent,
     BookComponent,
+    BookDetailsPopUpComponent,
   ],
   imports: [
     BrowserModule,

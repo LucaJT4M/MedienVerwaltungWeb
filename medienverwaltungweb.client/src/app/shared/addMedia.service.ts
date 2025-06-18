@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-  Book,
+  BookDTO,
   Interpret,
   MovieDTO,
   MusicAlbumDTO,
@@ -14,7 +14,7 @@ import { SongService } from './song.service';
 export class AddMediaService {
   newInterpret: Interpret = {};
   newMovie: MovieDTO = {};
-  newBook: Book = {};
+  newBook: BookDTO = {};
   newSong: SongDTO = {};
   newMusicAlbum: MusicAlbumDTO = {};
   interpretExists: boolean = false

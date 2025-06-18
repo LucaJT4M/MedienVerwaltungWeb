@@ -1,18 +1,52 @@
-<p>Book works</p>
-<input type="text"  [(ngModel)]="txtValue" (ngModelChange)="onTextChange($event)" />
+<div class="card">
+    <div class="card-body">
+        <p>Bücher:</p>
+        <div class="list-group">
+            <button *ngFor="let book of books"
+                    type="button"
+                    class="list-group-item list-group-item-action"
+                    data-bs-toggle="modal"
+                    data-bs-target="#bookDetailsModal"
+										(click)="selectBook(book)">
+                <strong>Id:</strong> {{book.isbn}}
+                <strong>Titel:</strong> {{book.title}}
+                <strong>Speicherort:</strong> {{book.location}}
+            </button>
+        </div>
+    </div>
+</div>
 <br>
-{{txtValue}}
-<br>
-{{message}}
-<br>
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <select class="form-select"
-    formControlName="username">
-        <option selected>Bitte wählen</option>
-        <option>Frau</option>
-        <option>Mann</option>
-        <option>Divers</option>
-    </select>
-  <input formControlName="email" type="email" placeholder="E-Mail" />
-  <button type="submit" [disabled]="userForm.invalid">Absenden</button>
-</form>
+<nav class="d-flex justify-content-center ">
+    <ul class="pagination">
+        <li class="page-item">
+            <button class="page-link" (click)="navToPage(1)"
+            [ngClass]="{'disabled' : !canNavPrevious}">1</button>
+        </li>
+        <li class="page-item">
+            <button class="page-link" (click)="navToPage(currentPage - 1)"
+            [ngClass]="{'disabled' : !canNavPrevious}"><</button>
+        </li>
+        <li class="page-item">
+            <button class="page-link" (click)="navToPage(currentPage-1)"
+            [ngClass]="{'disabled': !canNavPrevious}">{{currentPage-1}}</button>
+        </li>
+        <li class="page-item active" aria-current="page">
+            <span class="page-link">{{currentPage}}</span>
+        </li>
+        <li class="page-item">
+            <button class="page-link" (click)="navToPage(currentPage+1)"
+            [ngClass]="{'disabled': !canNavNext}">{{currentPage+1}}</button>
+        </li>
+        <li class="page-item">
+            <button class="page-link" (click)="navToPage(currentPage+1)"
+            [ngClass]="{'disabled' : !canNavNext}">></button>
+        </li>
+        <li class="page-item">
+            <button class="page-link" (click)="navToPage(maxPages+1)"
+            [ngClass]="{'disabled' : !canNavNext }">{{maxPages+1}}</button>
+        </li>
+    </ul>
+</nav>
+<app-book-details-pop-up [selectedBook]="selectedBook"
+[currentPage]="currentPage"
+aria-hidden="true"></app-book-details-pop-up>

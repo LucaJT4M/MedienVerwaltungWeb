@@ -112,7 +112,6 @@ namespace medienVerwaltungWeb.Server.Controllers
             return songList.Count / pageSize;
         }
 
-
         [HttpGet("{id}")]
         public async Task<ActionResult<SongDTO>> GetSong(int id)
         {
@@ -159,12 +158,12 @@ namespace medienVerwaltungWeb.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<SongDTO>> PostSong(SongDTO song)
         {
-            // var toAddSong = await GetMissingSongInfo(song);
+            var toAddSong = song.Adapt<Song>();
 
-            _unitOfWork.Add(song);
+            _unitOfWork.Add(toAddSong);
             await _unitOfWork.BeginTransactionAsync();
 
-            return CreatedAtAction("GetSong", new { id = song.Id }, song);
+            return CreatedAtAction("GetSong", new { id = toAddSong.Id }, toAddSong);
         }
 
         [HttpDelete("{id}")]

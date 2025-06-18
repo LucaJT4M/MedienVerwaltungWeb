@@ -9,7 +9,7 @@
  */
 
 
-export interface Book { 
+export interface BookDTO { 
     isbn?: number;
     title?: string | null;
     description?: string | null;

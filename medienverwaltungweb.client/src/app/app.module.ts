@@ -17,7 +17,9 @@ import { BookAddFormComponent } from './add-media/book-add-form/book-add-form.co
 import { BookComponent } from './book/book.component';
 import {ToastrModule} from "ngx-toastr"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { BookDetailsPopUpComponent } from './book/book-details-pop-up/book-details-pop-up.component'
+import { BookDetailsPopUpComponent } from './book/book-details-pop-up/book-details-pop-up.component';
+import { MovieDetailsPopUpComponent } from './movie/movie-details-pop-up/movie-details-pop-up.component'
+import { MovieComponent } from './movie/movie.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { BookDetailsPopUpComponent } from './book/book-details-pop-up/book-detai
     BookAddFormComponent,
     SongAddFormComponent,
     BookComponent,
+    MovieComponent,
     BookDetailsPopUpComponent,
+    MovieDetailsPopUpComponent,
   ],
   imports: [
     BrowserModule,

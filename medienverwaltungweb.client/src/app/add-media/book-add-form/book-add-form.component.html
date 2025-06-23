@@ -1,30 +1,81 @@
-<li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
-  <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Erscheinungsjahr:</span>
-  <input type="number"
-  class="form-control" 
-  aria-describedby="addon-wrapping"
-  autocomplete="off"
-  value="1"
-  min="1"
-  (change)="changeValues($event, 'RY')">
-</li>
-<li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
-  <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Seitenanzahl:</span>
-  <input type="number"
-  class="form-control" 
-  aria-describedby="addon-wrapping"
-  autocomplete="off"
-  value="1"
-  min="1"
-  (change)="changeValues($event, 'PC')">
-</li>
-<li class="list-group-item d-flex justify-content-between align-items-center input-group ">
-  <div class="form-floating">
-    <textarea class="form-control" 
-    placeholder="Beschreibung"
-    id="floatingTextarea"
-    autocomplete="off"
-    (change)="changeValues($event, 'D')"></textarea>
-    <label for="floatingTextarea">Beschreibung</label>
+<form [formGroup]="bookAddForm" (ngSubmit)="addNewBook()">
+  <ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+      <span class="input-group-text" 
+      id="addon-wrapping" 
+      style="width: 50%;">Titel:</span>
+      <input type="text"
+      class="form-control"
+      aria-describedby="addon-wrapping"
+      autocomplete="off"
+      formControlName="title">
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+      <span class="input-group-text" 
+      id="addon-wrapping" 
+      style="width: 50%;">Speicherort:</span>
+      <input type="text"
+      class="form-control"
+      aria-describedby="addon-wrapping"
+      autocomplete="off"
+      formControlName="location">
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+      <span class="input-group-text" 
+      id="addon-wrapping" 
+      style="width: 50%;">Seitenanzahl:</span>
+      <input type="number"
+      class="form-control"
+      aria-describedby="addon-wrapping"
+      autocomplete="off"
+      value="1"
+      min="1"
+      formControlName="pageCount">
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+      <span class="input-group-text" 
+      id="addon-wrapping" 
+      style="width: 50%;">Erscheinungsjahr:</span>
+      <input type="number"
+      class="form-control"
+      aria-describedby="addon-wrapping"
+      autocomplete="off"
+      value="2000"
+      min="1"
+      formControlName="releaseYear">
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+      <span class="input-group-text"
+        id="addon-wrapping"
+        style="width: 50%;">
+            Interpret:
+        </span>
+        <select class="form-select"
+        id="floatingSelect"
+        aria-label="Floating label select example"
+        formControlName="interpretFullName">
+            <option *ngFor="let interpret of interpretNameList"
+            [value]="interpret">
+                {{interpret}}
+            </option>
+        </select>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center input-group ">
+      <div class="form-floating">
+        <textarea class="form-control"
+        placeholder="Beschreibung"
+        id="floatingTextarea"
+        autocomplete="off"
+        formControlName="description"></textarea>
+        <label for="floatingTextarea">Beschreibung</label>
+      </div>
+    </li>
+  </ul>
+  <div class="d-flex justify-content-end">
+    <button type="submit"
+    class="btn btn-primary mt-3"
+    [disabled]="bookAddForm.invalid">
+        Buch hinzufügen
+    </button>
   </div>
-</li>
+</form>

@@ -71,6 +71,28 @@ namespace medienVerwaltungWeb.Server.Controllers
             return output;
         }
 
+        [HttpGet("GetPageCount/{pageSize}")]
+        public async Task<ActionResult<int>> GetPageCount(int pageSize)
+        {
+            var movieList = await _context.Movies.ToListAsync();
+
+            return movieList.Count / pageSize;
+        }
+
+        [HttpGet("IsPageLastPage/{page},{pageSize}")]
+        public async Task<ActionResult<bool>> IsPageLastPage(int page, int pageSize)
+        {
+            var movies = await _context.Movies.ToListAsync();
+            var toReturnBool = false;
+
+            if (movies.Count / pageSize <= page)
+            {
+                toReturnBool = true;
+            }
+
+            return toReturnBool;
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMovie(int id, Movie movie)
         {

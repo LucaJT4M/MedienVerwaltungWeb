@@ -1,14 +1,15 @@
-<div class="card">
+<div class="card"
+[inert]="mainModal">
     <div class="card-body">
         <p>Filme:</p>
         <div class="list-group">
             <button *ngFor="let movie of movies"
-                    type="button"
-                    class="list-group-item list-group-item-action"
-                    data-bs-toggle="modal"
-                    data-bs-target="#bookDetailsModal"
-										(click)="selectMovie(movie)">
-                <strong>Id:</strong> {{movie.id }}
+                type="button"
+                class="list-group-item list-group-item-action"
+                data-bs-toggle="modal"
+                data-bs-target="#movieDetailsModal"
+                (click)="selectMovie(movie)">
+                <strong>Id:</strong> {{movie.id}}
                 <strong>Titel:</strong> {{movie.title}}
                 <strong>Speicherort:</strong> {{movie.location}}
             </button>
@@ -16,7 +17,7 @@
     </div>
 </div>
 <br>
-<nav class="d-flex justify-content-center ">
+<nav class="d-flex justify-content-center">
     <ul class="pagination">
         <li class="page-item">
             <button class="page-link" (click)="navToPage(1)"
@@ -47,6 +48,8 @@
         </li>
     </ul>
 </nav>
-<!-- <app-movie-details-pop-up [selectedBook]="selectedBook"
+<app-movie-details-pop-up class="backdrop"
+[selectedMovie]="selectedMovie"
 [currentPage]="currentPage"
-aria-hidden="true"></app-movie-details-pop-up> -->
+*ngIf="mainModal">
+</app-movie-details-pop-up>

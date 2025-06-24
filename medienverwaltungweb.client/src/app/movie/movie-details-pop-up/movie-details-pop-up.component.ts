@@ -12,7 +12,6 @@ import { MovieComponent } from '../movie.component';
 export class MovieDetailsPopUpComponent {
   @Input() selectedMovie: MovieDTO = {}
   @Input() currentPage: number = 1
-  movieTitleIF: string = ""
 
   constructor(public service: MovieService, private movieComp: MovieComponent) {}
 
@@ -24,12 +23,11 @@ export class MovieDetailsPopUpComponent {
     inputDescription: string,
     inputGenre: string,
     inputLocation: string,
-    inputActorIds: Array<number>
   ) {
     var toUpdateMovie: MovieDTO = {
       id: toUpdateId,
       title: newTitle,
-      actorIDs: inputActorIds,
+      actorIDs: this.selectedMovie.actorIDs,
       description: inputDescription,
       genre: inputGenre,
       length: inputLength,
@@ -39,7 +37,19 @@ export class MovieDetailsPopUpComponent {
 
     this.service.saveMovie(toUpdateMovie).subscribe({
       next: () => {
-        this.movieComp.getDataForMovies
+        this.movieComp.getDataForMovies(this.currentPage)
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+  }
+
+  deleteMovie(movieId: number, currentPage: number) {
+    this.service.deleteMovie(movieId).subscribe({
+      next: () => {
+        this.service.getMoviePage(currentPage)
+        this.movieComp.getDataForMovies(currentPage)
       },
       error: (err) => {
         console.log(err)

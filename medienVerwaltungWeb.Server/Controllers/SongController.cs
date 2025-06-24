@@ -80,12 +80,12 @@ namespace medienVerwaltungWeb.Server.Controllers
         //     return toSortList.Take(count).Adapt<List<SongDTO>>();
         // }
 
-        [HttpGet("SongPagination/{page},{itemsPerPage}")]
-        public async Task<ActionResult<List<SongDTO>>> SongPagination(int page, int itemsPerPage)
+        [HttpGet("SongPagination/{page},{pageSize}")]
+        public async Task<ActionResult<List<SongDTO>>> SongPagination(int page, int pageSize)
         {
             var toSortList = await _context.Songs.ToListAsync();
 
-            var output = _controllerFunctions.Pagination(toSortList, itemsPerPage, page);
+            var output = _controllerFunctions.Pagination(toSortList, pageSize, page);
 
             return output.Adapt<List<SongDTO>>();
         }

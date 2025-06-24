@@ -12,7 +12,6 @@ import { BookComponent } from '../book.component';
 export class BookDetailsPopUpComponent {
   @Input() selectedBook: BookDTO = {}
   @Input() currentPage: number = 1
-  // bookTitleIF: string = ""
   
   constructor(public service: BookService, private bookComp: BookComponent) {}
 

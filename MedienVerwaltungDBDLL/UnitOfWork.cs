@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MedienVerwaltungDBDLL.Repos;
+using MedienVerwaltungDLL.Models.Actor;
 using MedienVerwaltungDLL.Models.Book;
 using MedienVerwaltungDLL.Models.Interpret;
 using MedienVerwaltungDLL.Models.Item;
@@ -92,6 +93,11 @@ namespace MedienVerwaltungDBDLL
                     await Interprets.AddAsync(newInterpret);
                     break;
 
+                case Actor:
+                    var newActor = entity as Actor ?? throw new Exception("Entity is not a Actor");
+                    await Actors.AddAsync(newActor);
+                    break;
+
                 default:
                     break;
             }
@@ -148,6 +154,11 @@ namespace MedienVerwaltungDBDLL
                 case Interpret:
                     var toRemoveInterpret = entity as Interpret ?? throw new Exception("Entity is not a Interpret");
                     Interprets.Remove(toRemoveInterpret);
+                    break;
+
+                case Actor:
+                    var toRemoveActor = entity as Actor ?? throw new Exception("Entity is not a Actor");
+                    Actors.Remove(toRemoveActor);
                     break;
 
                 default:
@@ -216,6 +227,10 @@ namespace MedienVerwaltungDBDLL
                     Interprets.Update(toUpdateInterpret);
                     break;
 
+                case Actor:
+                    var toUpdateActor = entity as Actor ?? throw new Exception("Entity is not a Actor");
+                    Actors.Update(toUpdateActor);
+                    break;
 
                 default:
                     break;

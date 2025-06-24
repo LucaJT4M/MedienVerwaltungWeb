@@ -1,1 +1,121 @@
-<p>movie-details-pop-up works!</p>
+<div class="modal fade" 
+id="movieDetailsModal" 
+tabindex="-1"
+aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" 
+                id="exampleModalLabel">
+                    Film Details
+                </h1>
+                <button type="button" 
+                class="btn-close" 
+                data-bs-dismiss="modal" 
+                aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+				<ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" 
+                        id="addon-wrapping" 
+                        style="width: 50%;">Id:</span>
+                        <label class="form-control">{{selectedMovie.id}}</label>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" 
+                        id="addon-wrapping" 
+                        style="width: 50%;">Titel:</span>
+                        <input type="text"
+                        #movieTitleIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedMovie.title}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" 
+                        id="addon-wrapping" 
+                        style="width: 50%;">Speicherort:</span>
+                        <input type="text"
+                        #movieLocationIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedMovie.location}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Länge:</span>
+                        <input type="number"
+                        #movieLengthIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedMovie.length}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" 
+                        id="addon-wrapping" 
+                        style="width: 50%;">Genre:</span>
+                        <input type="text"
+                        #movieGenreIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedMovie.genre}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" 
+                        id="addon-wrapping" 
+                        style="width: 50%;">Erscheinungsjahr:</span>
+                        <input type="number"
+                        #movieReleaseYearIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedMovie.releaseYear}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Beschreibung:</span>
+                        <input type="text"
+                        #movieDescriptionIF
+                        class="form-control" 
+                        placeholder="5" 
+                        aria-describedby="addon-wrapping"
+                        value="{{selectedMovie.description}}"
+                        autocomplete="off">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Schauspieler IDs:</span>
+                        <ul class="form-control" *ngFor="let actor of selectedMovie.actorIDs">
+                            <li>
+                                Schauspieler ID: {{actor}}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+			</div>
+            <div class="modal-footer">
+                <button 
+                type="button" 
+                class="btn btn-danger" 
+                data-bs-dismiss="modal" 
+                (click)="selectedMovie.id !== undefined && deleteMovie(selectedMovie.id, currentPage)">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" 
+                class="btn btn-primary" 
+                data-bs-dismiss="modal" 
+                (click)="saveMovie(selectedMovie.id, movieTitleIF.value, movieLengthIF.valueAsNumber, movieReleaseYearIF.valueAsNumber, movieDescriptionIF.value, movieGenreIF.value, movieLocationIF.value)">
+                    Änderungen Speichern
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

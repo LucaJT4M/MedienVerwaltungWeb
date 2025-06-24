@@ -66,7 +66,7 @@ namespace medienVerwaltungWeb.Server.Controllers
         {
             var toSortList = await _context.Movies.ToListAsync();
 
-            var output = _controllerFunctions.Pagination(toSortList, page, pageSize);
+            var output = _controllerFunctions.Pagination(toSortList, pageSize, page);
 
             return output;
         }

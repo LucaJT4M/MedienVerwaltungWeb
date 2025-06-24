@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ModelOptions } from '@angular/core';
 import { MovieDTO } from '../api-client';
 import { MovieService } from '../shared/movie.service';
 
@@ -16,6 +16,7 @@ export class MovieComponent {
   canNavNext: boolean = false
   selectedMovie: MovieDTO = {}
   timesNavigated: number = 0
+  mainModal: any;
 
   constructor(private service: MovieService) {
     this.getDataForMovies(this.currentPage)
@@ -57,7 +58,7 @@ export class MovieComponent {
         this.maxPages = res;
         this.service.getMoviePage(pageNum).subscribe({
           next: (res) => {
-            this.movies = res
+            this.movies = res as MovieDTO[]
             this.updatePageNums()
           },
           error: (err) => {

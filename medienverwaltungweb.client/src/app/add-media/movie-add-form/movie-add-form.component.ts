@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MedienVerwaltungWebService } from '../../shared/medien-verwaltung-web.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MovieDTO } from '../../api-client';
 import { MovieService } from '../../shared/movie.service';
@@ -19,9 +18,9 @@ export class MovieAddFormComponent implements OnInit {
     genre: new FormControl("", Validators.required),
     releaseYear: new FormControl(2000, Validators.required),
     description: new FormControl("", Validators.required),
-    actorIDs: new FormControl([], Validators.required)
   })
   newMovie: MovieDTO = {}
+  actorIdList: number[] = []
 
   genres: string[] = [
     'Science-Fiction',
@@ -37,21 +36,21 @@ export class MovieAddFormComponent implements OnInit {
 
   constructor(public service: MovieService, private toastr: ToasterService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  addNewSong() {
+  addNewMovie() {
     this.newMovie = {
       title: this.movieAddForm.get("title")?.value,
       location: this.movieAddForm.get("location")?.value,
       length: this.movieAddForm.get("length")?.value,
       releaseYear: this.movieAddForm.get("releaseYear")?.value,
       description: this.movieAddForm.get("description")?.value,
-      actorIDs: this.movieAddForm.get("actorIDs")?.value,
-      genre: this.movieAddForm.get("genre")?.value
+      genre: this.movieAddForm.get("genre")?.value,
+      actorIDs: this.actorIdList
     }
 
     this.movieAddForm.reset()
+    this.actorIdList = []
 
     this.service.addMovie(this.newMovie).subscribe({
       next:() => {
@@ -64,5 +63,10 @@ export class MovieAddFormComponent implements OnInit {
         this.toastr.error("Film wurde nicht hinzugefügt!")
       }
     })
+  }
+
+  setActorList(idList: number[]) {
+    this.actorIdList = idList
+    this.newMovie.actorIDs = this.actorIdList
   }
 }

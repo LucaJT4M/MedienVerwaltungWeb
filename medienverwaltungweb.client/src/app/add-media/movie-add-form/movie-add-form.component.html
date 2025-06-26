@@ -1,41 +1,73 @@
-<ul class="list-group">
-    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
-      <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Filmlänge:</span>
-      <input type="number"
-      class="form-control"
-      aria-describedby="addon-wrapping"
-      autocomplete="off"
-      value="1">
-    </li>
-    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
-      <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Erscheinungsjahr:</span>
-      <input type="number"
-      class="form-control"
-      aria-describedby="addon-wrapping"
-      autocomplete="off"
-      [value]="todaysDate.getFullYear()">
-    </li>
-    <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
-        <span class="input-group-text"
-        id="addon-wrapping"
-        style="width: 50%;">
-            Genre:
-        </span>
-        <select class="form-control form-select"
-        name="selectedGenre">
-            <option *ngFor="let genre of genres"
-            [value]="genre">
-                {{genre}}
-            </option>
-        </select>
-    </li>
-    <li class="list-group-item d-flex justify-content-between align-items-center input-group ">
-        <div class="form-floating">
-            <textarea class="form-control"
-            id="floatingTextarea"
-            autocomplete="off"></textarea>
-            <label for="floatingTextarea">Beschreibung</label>
-        </div>
-    </li>
-    <app-actor-add-form/>
-</ul>
+<form [formGroup]="movieAddForm" (ngSubmit)="addNewMovie()">
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+            <span class="input-group-text" 
+            id="addon-wrapping" 
+            style="width: 50%;">Titel:</span>
+            <input type="text"
+            class="form-control"
+            aria-describedby="addon-wrapping"
+            autocomplete="off"
+            formControlName="title">
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+            <span class="input-group-text" 
+            id="addon-wrapping" 
+            style="width: 50%;">Speicherort:</span>
+            <input type="text"
+            class="form-control"
+            aria-describedby="addon-wrapping"
+            autocomplete="off"
+            formControlName="location">
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+          <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Filmlänge:</span>
+          <input type="number"
+          class="form-control"
+          aria-describedby="addon-wrapping"
+          autocomplete="off"
+          value="1">
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+          <span class="input-group-text" id="addon-wrapping" style="width: 50%;">Erscheinungsjahr:</span>
+          <input type="number"
+          class="form-control"
+          aria-describedby="addon-wrapping"
+          autocomplete="off"
+          [value]="todaysDate.getFullYear()"
+          min="1">
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center input-group flex-nowrap">
+            <span class="input-group-text"
+            id="addon-wrapping"
+            style="width: 50%;">
+                Genre:
+            </span>
+            <select class="form-control form-select"
+            name="selectedGenre"
+            formControlName="genre">
+                <option *ngFor="let genre of genres"
+                [value]="genre">
+                    {{genre}}
+                </option>
+            </select>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center input-group ">
+            <div class="form-floating">
+                <textarea class="form-control"
+                id="floatingTextarea"
+                autocomplete="off"
+                formControlName="description"></textarea>
+                <label for="floatingTextarea">Beschreibung</label>
+            </div>
+        </li>
+        <app-actor-add-form/>
+    </ul>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary mt-3"
+        type="submit"
+        [disabled]="movieAddForm.invalid || actorIdList.length == 0">
+            Film hinzufügen
+        </button>
+    </div>
+</form>

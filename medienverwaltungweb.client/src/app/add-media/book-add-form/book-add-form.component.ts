@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AddMediaService } from '../../shared/addMedia.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
 import { BookDTO } from '../../api-client';
 import { ToasterService } from '../../shared/toaster.service';
 import { BookService } from '../../shared/book.service';
@@ -23,6 +21,7 @@ export class BookAddFormComponent implements OnInit {
   })
   interpretNameList: string[] = []
   newBook: BookDTO = {}
+  todaysDate: Date = new Date()
   
   constructor(public service: BookService, private toastr: ToasterService) {}
 

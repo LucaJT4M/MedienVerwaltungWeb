@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class MedienVerwaltungWebService {
   private url: string = environment.apiBaseUrl;
-  actorList: Actor[] = [];
+  // actorList: Actor[] = [];
   newMovie: MovieDTO = {};
 
   constructor(private http: HttpClient) {

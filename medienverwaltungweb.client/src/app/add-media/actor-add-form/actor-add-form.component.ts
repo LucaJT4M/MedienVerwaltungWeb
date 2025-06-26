@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MedienVerwaltungWebService } from '../../shared/medien-verwaltung-web.service';
 import { Actor } from '../../api-client';
+import { MovieAddFormComponent } from '../movie-add-form/movie-add-form.component';
 
 @Component({
   selector: 'app-actor-add-form',
@@ -9,27 +10,34 @@ import { Actor } from '../../api-client';
   standalone: false,
 })
 export class ActorAddFormComponent implements OnInit {
+  actorIdList: number[] = []
   public actorList: Actor[] = [];
-  private addedActors: Actor[] = [];
 
-  constructor(public service: MedienVerwaltungWebService) {
-    if (service.actorList.length > 0) {
-      this.actorList = service.actorList;
-    }
+  constructor(public service: MedienVerwaltungWebService, private movieAddCompo: MovieAddFormComponent) {
+    service.getActors().subscribe({
+      next: (res) => {
+        this.actorList = res as Actor[]
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 
   ngOnInit() {}
 
-  actorIsSelected(actor: Actor): boolean {
-    return this.addedActors.includes(actor);
-  }
-
-  toggleActorSelection(actor: Actor) {
-    const index = this.addedActors.indexOf(actor);
-    if (index > -1) {
-      this.addedActors.splice(index, 1);
+  changeSelection(id: number | undefined) {
+    let Id: number = 0
+    Id = Number(id)
+    
+    // Checks if Id already is in the Array
+    if (this.actorIdList.includes(Id)) {
+      let index = this.actorIdList.indexOf(Id)
+      this.actorIdList.splice(index, 1)
     } else {
-      this.addedActors.push(actor);
+      this.actorIdList.push(Id)
     }
+
+    this.movieAddCompo.setActorList(this.actorIdList)
   }
 }
